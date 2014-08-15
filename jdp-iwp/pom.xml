@@ -1,0 +1,290 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.cloudtec</groupId>
+  <artifactId>jdp-iwp</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <properties>
+	<!-- 主要依赖库的版本定义 -->
+	<spring.version>4.0.3.RELEASE</spring.version>
+	<spring-data-jpa.version>1.5.2.RELEASE</spring-data-jpa.version>
+	<hibernate.version>4.3.5.Final</hibernate.version>
+	<shiro.version>1.2.3</shiro.version>
+	<hibernate-validator.version>5.0.3.Final</hibernate-validator.version>	
+	<jackson.version>2.3.3</jackson.version>	
+	<aspectj.version>1.7.4</aspectj.version>	
+	<slf4j.version>1.7.6</slf4j.version>	
+	<logback.version>1.1.2</logback.version>	
+	<junit.version>4.11</junit.version>
+	<jetty.version>8.1.15.v20140411</jetty.version>
+	<h2.version>1.3.176</h2.version>
+	<!-- others setting -->
+  	<commons-lang3.version>3.1</commons-lang3.version>
+	<commons-io.version>2.4</commons-io.version>
+	<commons-codec.version>1.8</commons-codec.version>
+	<commons-fileupload.version>1.3</commons-fileupload.version>
+	<commons-beanutils.version>1.8.3</commons-beanutils.version>
+	<guava.version>14.0.1</guava.version>
+	<!-- 项目属性 -->
+	<jdbc.driver.groupId>com.h2database</jdbc.driver.groupId>
+	<jdbc.driver.artifactId>h2</jdbc.driver.artifactId>
+	<jdbc.driver.version>${h2.version}</jdbc.driver.version>
+	
+	<jetty.version>8.1.15.v20140411</jetty.version>
+	<webserver.port>8001</webserver.port>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-framework-bom</artifactId>
+				<version>${spring.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+  </dependencyManagement>
+  <dependencies>
+  	<!-- PERSISTENCE begin -->
+  	<dependency>
+  		<groupId>org.springframework.data</groupId>
+  		<artifactId>spring-data-jpa</artifactId>
+  		<version>1.5.2.RELEASE</version>
+  	</dependency>
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-entitymanager</artifactId>
+		<version>${hibernate.version}</version>
+	</dependency>
+	<dependency>
+  		<groupId>org.hibernate</groupId>
+  		<artifactId>hibernate-c3p0</artifactId>
+  		<version>4.3.5.Final</version>
+  	</dependency>
+  	<!-- jdbc driver 如果使用oracle，则无需如下配置-->
+	<dependency>
+		<groupId>${jdbc.driver.groupId}</groupId>
+		<artifactId>${jdbc.driver.artifactId}</artifactId>
+		<version>${jdbc.driver.version}</version>
+		<scope>runtime</scope>
+	</dependency>
+	<!-- spring aop -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${aspectj.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${aspectj.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+	<!-- PERSISTENCE end -->
+	<!-- WEB begin -->
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-webmvc</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>jstl</artifactId>
+		<version>1.2</version>
+	</dependency>
+	<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>javax.servlet-api</artifactId>
+		<version>3.0.1</version>
+		<scope>provided</scope>
+	</dependency>
+	<!-- WEB end -->
+	<!-- SECURITY begin -->
+	<dependency>
+		<groupId>org.apache.shiro</groupId>
+		<artifactId>shiro-spring</artifactId>
+		<version>${shiro.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.shiro</groupId>
+		<artifactId>shiro-ehcache</artifactId>
+		<version>${shiro.version}</version>
+	</dependency>
+	<!-- SECURITY end -->
+	<!-- LOGGING begin -->
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-api</artifactId>
+		<version>${slf4j.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>ch.qos.logback</groupId>
+		<artifactId>logback-classic</artifactId>
+		<version>${logback.version}</version>
+		<scope>runtime</scope>
+	</dependency>
+	<!-- 代码直接调用log4j会被桥接到slf4j -->
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>log4j-over-slf4j</artifactId>
+		<version>${slf4j.version}</version>
+		<scope>runtime</scope>
+	</dependency>
+	<!-- 代码直接调用common-logging会被桥接到slf4j -->
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>jcl-over-slf4j</artifactId>
+		<version>${slf4j.version}</version>
+		<scope>runtime</scope>
+	</dependency>
+	<!-- 代码直接调用java.util.logging会被桥接到slf4j -->
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>jul-to-slf4j</artifactId>
+		<version>${slf4j.version}</version>
+		<scope>runtime</scope>
+	</dependency>
+	<!-- LOGGING end -->
+	<!-- JACKSON json -->
+	<dependency>
+		<groupId>com.fasterxml.jackson.core</groupId>
+		<artifactId>jackson-core</artifactId>
+		<version>${jackson.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>com.fasterxml.jackson.core</groupId>
+		<artifactId>jackson-databind</artifactId>
+		<version>${jackson.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>com.fasterxml.jackson.core</groupId>
+		<artifactId>jackson-annotations</artifactId>
+		<version>${jackson.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>com.fasterxml.jackson.module</groupId>
+		<artifactId>jackson-module-jaxb-annotations</artifactId>
+		<version>${jackson.version}</version>
+	</dependency>
+	<!-- JACKSON end -->
+	<!-- GENERAL UTILS begin -->
+	<dependency>
+		<groupId>org.apache.commons</groupId>
+		<artifactId>commons-lang3</artifactId>
+		<version>${commons-lang3.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>commons-io</groupId>
+		<artifactId>commons-io</artifactId>
+		<version>${commons-io.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>commons-codec</groupId>
+		<artifactId>commons-codec</artifactId>
+		<version>${commons-codec.version}</version>
+	</dependency>
+	<dependency>
+	    <groupId>commons-fileupload</groupId>
+	    <artifactId>commons-fileupload</artifactId>
+	    <version>${commons-fileupload.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>commons-beanutils</groupId>
+		<artifactId>commons-beanutils</artifactId>
+		<version>${commons-beanutils.version}</version>
+		<exclusions>
+			<exclusion>
+				<groupId>commons-logging</groupId>
+				<artifactId>commons-logging</artifactId>
+			</exclusion>
+		</exclusions>
+	</dependency>
+
+	<!-- google java library -->
+	<dependency>
+		<groupId>com.google.guava</groupId>
+		<artifactId>guava</artifactId>
+		<version>${guava.version}</version>
+	</dependency>
+	<!-- TEST begin -->
+	<dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<version>${junit.version}</version>
+		<scope>test</scope>
+	</dependency>
+	<!-- jetty -->
+		<dependency>
+			<groupId>org.eclipse.jetty.aggregate</groupId>
+			<artifactId>jetty-webapp</artifactId>
+			<version>${jetty.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-jsp</artifactId>
+			<version>${jetty.version}</version>
+		</dependency>
+	<!-- TEST end -->
+	<dependency>
+		<groupId>commons-lang</groupId>
+		<artifactId>commons-lang</artifactId>
+		<version>2.1</version>
+	</dependency>
+	<dependency>
+		<groupId>javax.validation</groupId>
+		<artifactId>validation-api</artifactId>
+		<version>1.1.0.Final</version>
+	</dependency>
+	<dependency>
+		<groupId>cglib</groupId>
+		<artifactId>cglib</artifactId>
+		<version>3.1</version>
+		<scope>runtime</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-context-support</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-validator</artifactId>
+		<version>5.0.3.Final</version>
+	</dependency>
+  </dependencies>
+   <build>
+    <finalName>jmp</finalName>
+        <plugins>  
+        <plugin>  
+            <groupId>org.apache.maven.plugins</groupId>  
+            <artifactId>maven-compiler-plugin</artifactId>  
+            <version>2.3.2</version>
+            <configuration>  
+                <source>1.6</source>  
+                <target>1.6</target>
+            </configuration>  
+        </plugin>
+        <!-- jetty插件 -->
+		<plugin>
+			<groupId>org.mortbay.jetty</groupId>
+			<artifactId>jetty-maven-plugin</artifactId>
+			<version>${jetty.version}</version>
+			<configuration>
+				<connectors>
+					<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+						<port>${webserver.port}</port>
+					</connector>
+				</connectors>
+				<webAppConfig>
+					<contextPath>/${project.artifactId}</contextPath>
+				</webAppConfig>
+				<systemProperties>  
+		            <systemProperty>
+		            	<name>org.mortbay.util.URI.charset</name>
+		            	<value>${project.build.sourceEncoding}</value>
+		        	</systemProperty>
+		        </systemProperties>
+			</configuration>
+		</plugin>
+    </plugins>  
+  </build>
+</project>
