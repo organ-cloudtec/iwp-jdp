@@ -10,6 +10,7 @@
 
 package com.cloudtec.modules.sys.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,6 @@ import org.springframework.stereotype.Service;
 import com.cloudtec.modules.sys.dao.MenuDao;
 import com.cloudtec.modules.sys.entity.Menu;
 import com.cloudtec.modules.sys.entity.User;
-
-
-
 
 /**
  * @ClassName: MenuService
@@ -39,8 +37,31 @@ public class MenuService {
 	private MenuDao menuDao;
 
 	public Page<Menu> findMenus(Map<String, Object> searchMap, int pageNumber,
-			int pageSize, Object object, Map<String, Object> searchMap2) {
+			int pageSize, Object sort) {
 		;
 		return menuDao.findAll(new PageRequest(pageNumber - 1, pageSize));
+	}
+
+	/**
+	 * @Title: MenuService.findAll
+	 * @Author wangqi01 2014-8-19
+	 * @Description: TODO
+	 * @return List<Menu>
+	 * 
+	 */
+	public List<Menu> findAll() {
+		return menuDao.findAll();
+	}
+
+	/**
+	 * @Title: MenuService.findByRecid
+	 * @Author wangqi01 2014-8-20
+	 * @Description: TODO
+	 * @param recid
+	 * @return Menu
+	 * 
+	 */
+	public Menu findByRecid(String recid) {
+		return menuDao.findByRecid(recid);
 	}
 }

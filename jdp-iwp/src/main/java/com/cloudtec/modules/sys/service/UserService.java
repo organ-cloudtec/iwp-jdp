@@ -44,18 +44,19 @@ public class UserService {
 	  * @throws
 	  */
 	public  Page<User> findUsers(Map<String, Object> searchParams, int pageNumber, int pageSize,
-			String sortType, Map<String, Object> searchMap) {
+			String sortType) {
 		PageRequest pageRequest = buildPageRequest(pageNumber, pageSize, sortType);
-		return userDao.findAll(pageRequest);//spec,
+		return userDao.findAll(buildSpecification(searchParams),pageRequest);//spec,
 	}
 	/**
 	 * 创建动态查询条件组合.
 	 */
-	private Specification<User> buildSpecification(Long userId, Map<String, Object> searchParams) {
+	private Specification<User> buildSpecification(Map<String, Object> searchParams) {
 		Map<String, SearchFilter> filters = SearchFilter.parse(searchParams);
-		filters.put("user.recid", new SearchFilter("user.recid", Operator.EQ, userId));
-		Specification<User> spec = DynamicSpecifications.bySearchFilter(filters.values(), User.class);
-		return spec;
+//		filters.put("user.recid", new SearchFilter("user.recid", Operator.EQ, userId));
+		if(filters.size()>0)
+			return DynamicSpecifications.bySearchFilter(filters.values(), User.class);
+		return null;
 	}
 	/**
 	 * 创建分页请求.

@@ -10,6 +10,7 @@
 
 package com.cloudtec.modules.sys.dao;
 
+
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,7 +30,18 @@ import com.cloudtec.modules.sys.entity.Menu;
 @Repository("menuDao")
 public interface MenuDao extends JpaRepository<Menu, String>{
 	
-	List<Menu> findByRecid(String recid);
-	
+	Menu findByRecid(String recid);
+
+	/**
+	 * @Title: MenuDao.findByUserRecid
+	 * @Author wangqi01 2014-8-20
+	 * @Description: TODO
+	 * @param recid
+	 * @return List<Menu>
+	 * 根据用户获取对应的菜单信息
+	 */
+	@Query("select distinct m from Menu m, Role r, User u where m in elements (r.menuList) and r in elements (u.roleList)" +
+			" and u.recid=:recid order by m.sort")
+	List<Menu> findByUserRecid(String recid);
 
 }

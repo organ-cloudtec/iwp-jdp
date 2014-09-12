@@ -10,9 +10,14 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
 import com.cloudtec.common.persistence.BaseEntity;
 import com.cloudtec.common.persistence.IdEntity;
+
 @Entity
+@DynamicInsert @DynamicUpdate
 @Table(name="RBAC_ROLE")
 public class Role extends BaseEntity<Role>{
 

@@ -25,6 +25,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 
+import com.cloudtec.common.utils.Encodes;
 import com.cloudtec.modules.sys.entity.Role;
 import com.cloudtec.modules.sys.entity.User;
 import com.cloudtec.modules.sys.service.UserService;
@@ -70,9 +71,14 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 		User user = userService.findUserByLoginName(token.getUsername());
 		
 		if (user != null) {
-//			return new SimpleAccount(new Principal(user),user.getPassword(),getName());
-			//.substring(16)  ByteSource.Util.bytes(salt)
-//			byte[] salt = Encodes.decodeHex(user.getPassword().substring(0,16));
+			
+		/*	
+		 //后台数据库中密码使用密文存储时使用，使用明文存储时注释
+		 byte[] salt = Encodes.decodeHex(user.getPassword().substring(0,16));
+			return new SimpleAuthenticationInfo(new Principal(user), 
+					user.getPassword().substring(16),ByteSource.Util.bytes(salt), getName());
+		*/
+			//密码使用明文存储时使用
 			return new SimpleAuthenticationInfo(new Principal(user), 
 					user.getPassword(),null, getName());
 		} else {

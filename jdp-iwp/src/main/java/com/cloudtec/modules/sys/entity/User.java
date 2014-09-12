@@ -16,6 +16,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
 
 import com.cloudtec.common.persistence.BaseEntity;
 import com.cloudtec.common.utils.annotation.ExeclField;
@@ -23,6 +26,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
 @Entity
+@DynamicInsert @DynamicUpdate
 @Table(name="RBAC_USER")
 public class User extends BaseEntity<User>{
 	private static final long serialVersionUID = 581598688846851054L;
@@ -75,7 +79,7 @@ public class User extends BaseEntity<User>{
 	}
 	@Transient
 	public boolean isAdmin() {
-		return recid.equals(recid)?true:false;
+		return true;
 	}
 	@Transient
 	@JsonIgnore

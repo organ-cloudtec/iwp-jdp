@@ -10,10 +10,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
 import com.cloudtec.common.persistence.BaseEntity;
 
 
 @Entity
+@DynamicInsert @DynamicUpdate
 @Table(name="RBAC_ORG")
 public class Organ extends BaseEntity<Organ>{
 
@@ -25,6 +29,7 @@ public class Organ extends BaseEntity<Organ>{
 	private Integer grade;
 	
 	private Organ parent;
+	private String parentIds;
 	private List<Organ> childList = new ArrayList<Organ>();
 	private List<User> userList = new ArrayList<User>();
 	
@@ -82,6 +87,12 @@ public class Organ extends BaseEntity<Organ>{
 	public void setUserList(List<User> userList) {
 		this.userList = userList;
 	}
-	
+	@JoinColumn(name="PARENTIDS")
+	public String getParentIds() {
+		return parentIds;
+	}
+	public void setParentIds(String parentIds) {
+		this.parentIds = parentIds;
+	}
 	
 }

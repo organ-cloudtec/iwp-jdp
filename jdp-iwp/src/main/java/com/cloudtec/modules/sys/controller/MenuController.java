@@ -11,24 +11,27 @@
 package com.cloudtec.modules.sys.controller;
 
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cloudtec.common.controller.BaseController;
+import com.cloudtec.common.utils.StringUtils;
 import com.cloudtec.modules.sys.entity.Menu;
-import com.cloudtec.modules.sys.entity.User;
 import com.cloudtec.modules.sys.service.MenuService;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 
@@ -49,19 +52,18 @@ public class MenuController extends BaseController {
 	private MenuService menuService;
 	
 	@RequestMapping(value = {"list", ""})
-	public String list(@RequestParam(value = "page", defaultValue = "1") int pageNumber,
-			@RequestParam(value = "page.size", defaultValue = ContantsRbac.DEFAULT_PAGE_SIZE) int pageSize,
-			HttpServletRequest request, HttpServletResponse response, Model model) {
-		Map<String, Object> searchMap = Maps.newHashMap();
-		Page<Menu> page = menuService.findMenus(searchMap,pageNumber,pageSize,null,searchMap);
-		request.setAttribute("menus", page);
-		request.setAttribute("menu", new Menu());
+	public String list(HttpServletRequest request, HttpServletResponse response, Model model) {
+		List<Menu> sourcelist = menuService.findAll();
+		List<Menu> list = Lists.newArrayList();
+		Menu.sortList(list, sourcelist, "TOP_MENU_ID");
+		request.setAttribute("menus", list);
 		return "modules/sys/menuList";
 	}
 	
 	@RequestMapping(value="form")
-	public String form(HttpServletRequest request, HttpServletResponse response, Model model){
-		Menu menu = new Menu();
+	public String form(Menu menu, Model model){
+		if(StringUtils.isNotBlank(menu.getRecid()))
+			menu = menuService.findByRecid(menu.getRecid());
 		model.addAttribute("menu", menu);
 		return "modules/sys/menuForm";
 	}
@@ -71,9 +73,49 @@ public class MenuController extends BaseController {
 		
 		return "";
 	}
-	
+	/**
+	 * 功能已完成,获取右侧菜单
+	 * @Title: MenuController.tree
+	 * @Author wangqi01 2014-8-20
+	 * @Description: TODO
+	 * @param request
+	 * @return String
+	 *
+	 */
+	@RequiresUser
 	@RequestMapping(value = "tree")
-	public String tree(){
+	public String tree(HttpServletRequest request) {
+//		String parentId = request.getParameter("parentId");
+//		request.setAttribute("parentId", parentId);
 		return "modules/sys/menuTree";
+	}
+	/**
+	 * 菜单树
+	 * @Title: MenuController.treeData
+	 * @Author wangqi01 2014-8-20
+	 * @Description: TODO
+	 * @param extId
+	 * @param response
+	 * @return List<Map<String,Object>>
+	 *
+	 */
+	@RequiresUser
+	@ResponseBody
+	@RequestMapping(value = "treeData")
+	public List<Map<String, Object>> treeData(@RequestParam(required=false) Long extId, HttpServletResponse response) {
+		response.setContentType("application/json; charset=UTF-8");
+		List<Map<String, Object>> mapList = Lists.newArrayList();
+		List<Menu> list = menuService.findAll();
+		for (int i=0; i<list.size(); i++){
+			Menu e = list.get(i);
+			if (extId == null || (extId!=null && !extId.equals(e.getRecid()) && e.getParents().indexOf(","+extId+",")==-1)){
+				Map<String, Object> map = Maps.newHashMap();
+				map.put("id", e.getRecid());
+				map.put("pId", e.getParent()!=null?e.getParent().getRecid():0);
+				map.put("name", e.getName());
+				mapList.add(map);
+			}
+		}
+		return mapList;
 	}
 }

@@ -59,7 +59,7 @@ public class LoginController extends BaseController{
 			return "redirect:"+ Global.getAdminPath()+"/login";
 		}
 		//已经登陆跳转管理首页
-		return "modules/sys/sysindex";
+		return "modules/sys/sysIndex";
 	}
 
 }

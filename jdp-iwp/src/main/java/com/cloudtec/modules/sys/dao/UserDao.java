@@ -1,6 +1,7 @@
 package com.cloudtec.modules.sys.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.cloudtec.modules.sys.entity.User;
 
 @Repository
-public interface UserDao extends JpaRepository<User,String>{
+public interface UserDao extends JpaRepository<User,String>,JpaSpecificationExecutor<User>{
 	@Query("select u from User u where u.username=?1")
 	User findUserByLoginName(String userName);
 

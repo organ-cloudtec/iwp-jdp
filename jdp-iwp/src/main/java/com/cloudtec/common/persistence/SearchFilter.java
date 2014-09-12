@@ -48,7 +48,7 @@ public class SearchFilter {
 				throw new IllegalArgumentException(key + " is not a valid search filter name");
 			}
 			String filedName = names[1];
-			Operator operator = Operator.valueOf(names[0]);
+			Operator operator = Operator.valueOf(names[0].toUpperCase());
 
 			// 创建searchFilter
 			SearchFilter filter = new SearchFilter(filedName, operator, value);

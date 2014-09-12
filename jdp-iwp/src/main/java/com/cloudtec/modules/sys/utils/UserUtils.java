@@ -102,7 +102,7 @@ public class UserUtils  {
 			if (user.isAdmin()){
 				menuList = menuDao.findAll();
 			}else{
-				menuList = menuDao.findByRecid(user.getRecid());
+				menuList = menuDao.findByUserRecid(user.getRecid());
 			}
 			putCache(CACHE_MENU_LIST, menuList);
 		}
