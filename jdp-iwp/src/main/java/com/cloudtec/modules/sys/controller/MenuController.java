@@ -25,6 +25,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cloudtec.common.config.Global;
 import com.cloudtec.common.controller.BaseController;
@@ -67,11 +68,30 @@ public class MenuController extends BaseController {
 	}
 	
 	@RequestMapping(value = "save")
-	public String save(Menu menu,HttpServletRequest request, HttpServletResponse response,Model model){
+	public String save(Menu menu,Model model,RedirectAttributes redirectAttributes){
 		//保存菜单信息
 		menuService.save(menu);
+		addMessage(redirectAttributes, "保存菜单 '"+menu.getName()+"' 成功！");
 		return "redirect:"+Global.getAdminPath()+"/sys/menu/?repage";
 	}
+	
+	@RequestMapping(value="delete")
+	public String delete(Menu menu,Model model,RedirectAttributes redirectAttributes){
+		if(StringUtils.isEmpty(menu.getRecid())){
+			addMessage(model, "删除菜单失败，菜单ID不可为空!");
+			return "redirect:"+Global.getAdminPath()+"/sys/menu/?repage";
+		}
+		if(menuService.delete(menu)){
+			addMessage(redirectAttributes, "删除菜单信息成功。");
+		}else{
+			addMessage(redirectAttributes, "删除菜单失败。");
+		}
+		return "redirect:"+Global.getAdminPath()+"/sys/menu/?repage";
+	}
+	
+	
+	
+	
 	/**
 	 * 功能已完成,获取右侧菜单
 	 * @Title: MenuController.tree

@@ -88,4 +88,21 @@ public class MenuService  extends BaseService {
 		
 		return menuDao.findAll();
 	}
+
+	/**
+	 * @Title: MenuService.delete
+	 * @Author wangqi01 2014-9-19
+	 * @Description: TODO
+	 * @param menu void
+	 * 
+	 */
+	public boolean delete(Menu menu) {
+		try{
+			menuDao.delete(menu.getRecid());
+		}catch(Exception e){
+			logger.error("删除菜单失败，菜单ID :"+ menu.getRecid(), e);
+			return false;
+		}
+		return true;
+	}
 }
