@@ -38,7 +38,7 @@ create table RBAC_MENU (
 	PARENT_ID varchar(255),
 	PARENTS varchar(255),
 	SORT int,
-	ISSHOW varchar(1),
+	IS_SHOW varchar(1),
 	ICON varchar(255),
 	REMARKS varchar(255),
 	DEL_FLAG varchar(1) default 0,

@@ -7,6 +7,7 @@
 	<%@include file="/WEB-INF/views/include/head.jsp" %>
 	<%@include file="/WEB-INF/views/include/treeview.jsp" %>
 	<script type="text/javascript">
+		var api = art.dialog.open.api;
 		var key, lastValue = "", nodeList = [];
 		var tree, setting = {view:{selectedMulti:false},check:{enable:"${checked}",nocheckInherit:true},
 				data:{simpleData:{enable:true}},
@@ -22,9 +23,7 @@
 					}
 				}, 
 				onDblClick:function(){
-					//$.jBox.getBox().find("button[value='ok']").trigger("click");
-					alert($("button[value='ok']", top.mainFrame.document).val());
-					//$("input[type='text']", top.mainFrame.document).focus();
+					api._click("确定");
 				}}};
 		$(document).ready(function(){
 			$.get("${ctx}${url}${fn:indexOf(url,'?')==-1?'?':'&'}&extId=${extId}&module=${module}&t="+new Date().getTime(), function(zNodes){
