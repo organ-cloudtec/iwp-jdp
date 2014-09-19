@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-
+import com.cloudtec.common.service.BaseService;
 import com.cloudtec.modules.sys.dao.RoleDao;
 import com.cloudtec.modules.sys.entity.Role;
 
@@ -30,7 +30,7 @@ import com.cloudtec.modules.sys.entity.Role;
  * @date 2014-8-11 上午10:57:31
  */
 @Service("roleService")
-public class RoleService  {
+public class RoleService  extends BaseService {
 	
 	@Autowired
 	@Qualifier("roleDao")
@@ -41,9 +41,49 @@ public class RoleService  {
 	  * @Author wangqi01 2014-8-12
 	  * @Description: TODO
 	  * @return List<Role>
-	  *
 	 */
 	public List<Role> findAllRole() {
 		return roleDao.findAll();
+	}
+
+	/**
+	 * @Title: RoleService.findByRecid
+	 * @Author wangqi01 2014-9-15
+	 * @Description: TODO
+	 * @param recid
+	 * @return Role
+	 * 
+	 */
+	public Role findByRecid(String recid) {
+		return roleDao.findOne(recid);
+	}
+
+	/**
+	 * @Title: RoleService.delete
+	 * @Author wangqi01 2014-9-16
+	 * @Description: TODO
+	 * @param recid
+	 * @return boolean
+	 * 
+	 */
+	public boolean delete(String recid) {
+		try {
+			roleDao.delete(recid);
+		} catch (Exception e) {
+			logger.error("根据角色ID '"+recid+"' 删除角色，失败。\n"+e.getMessage());
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * @Title: RoleService.save
+	 * @Author wangqi01 2014-9-16
+	 * @Description: TODO
+	 * @param role void
+	 * 
+	 */
+	public void save(Role role) {
+		roleDao.save(role);
 	}
 }

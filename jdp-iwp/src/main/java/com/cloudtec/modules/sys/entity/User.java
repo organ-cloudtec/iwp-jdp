@@ -16,12 +16,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 
 import com.cloudtec.common.persistence.BaseEntity;
-import com.cloudtec.common.utils.annotation.ExeclField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
@@ -37,8 +38,11 @@ public class User extends BaseEntity<User>{
 	private List<Role> roleList = new ArrayList<Role>();
 	private List<String> roleIdList;
 	
+	private String confirmNewPassword;
+	
 	@ManyToOne
 	@JoinColumn(name="ORG_RECID")
+	@Cascade(value = CascadeType.REFRESH)
 	public Organ getOrgan() {
 		return organ;
 	}
@@ -64,6 +68,7 @@ public class User extends BaseEntity<User>{
 	public String getUsername() {
 		return username;
 	}
+	@JsonIgnore
 	@Column(name="PWD",nullable=false)
 	public String getPassword() {
 		return password;
@@ -99,4 +104,12 @@ public class User extends BaseEntity<User>{
 			roleList.add(role);
 		}
 	}
+	@Transient
+	public String getConfirmNewPassword() {
+		return confirmNewPassword;
+	}
+	public void setConfirmNewPassword(String confirmNewPassword) {
+		this.confirmNewPassword = confirmNewPassword;
+	}
+	 
 }

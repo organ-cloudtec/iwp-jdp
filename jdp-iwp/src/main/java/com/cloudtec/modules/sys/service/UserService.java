@@ -13,12 +13,13 @@ import org.springframework.stereotype.Service;
 
 import com.cloudtec.common.persistence.DynamicSpecifications;
 import com.cloudtec.common.persistence.SearchFilter;
-import com.cloudtec.common.persistence.SearchFilter.Operator;
+import com.cloudtec.common.service.BaseService;
 import com.cloudtec.modules.sys.dao.UserDao;
 import com.cloudtec.modules.sys.entity.User;
+import com.cloudtec.modules.sys.utils.PageBuildUtils;
 
 @Service
-public class UserService {
+public class UserService  extends BaseService {
 
 	@Autowired
 	private UserDao userDao;
@@ -45,31 +46,9 @@ public class UserService {
 	  */
 	public  Page<User> findUsers(Map<String, Object> searchParams, int pageNumber, int pageSize,
 			String sortType) {
-		PageRequest pageRequest = buildPageRequest(pageNumber, pageSize, sortType);
-		return userDao.findAll(buildSpecification(searchParams),pageRequest);//spec,
-	}
-	/**
-	 * 创建动态查询条件组合.
-	 */
-	private Specification<User> buildSpecification(Map<String, Object> searchParams) {
-		Map<String, SearchFilter> filters = SearchFilter.parse(searchParams);
-//		filters.put("user.recid", new SearchFilter("user.recid", Operator.EQ, userId));
-		if(filters.size()>0)
-			return DynamicSpecifications.bySearchFilter(filters.values(), User.class);
-		return null;
-	}
-	/**
-	 * 创建分页请求.
-	 */
-	private PageRequest buildPageRequest(int pageNumber, int pagzSize, String sortType) {
-		Sort sort = null;
-		if (sortType == null || "auto".equals(sortType)) {
-			sort = new Sort(Direction.DESC, "recid");
-		} else if ("title".equals(sortType)) {
-			sort = new Sort(Direction.ASC, "title");
-		}
-
-		return new PageRequest(pageNumber - 1, pagzSize, sort);
+		PageBuildUtils<User> pageUtils = new PageBuildUtils<User>();
+		PageRequest pageRequest = pageUtils.buildPageRequest(pageNumber, pageSize, sortType);
+		return userDao.findAll(pageUtils.buildSpecification(searchParams),pageRequest);//spec,
 	}
 
 	/**

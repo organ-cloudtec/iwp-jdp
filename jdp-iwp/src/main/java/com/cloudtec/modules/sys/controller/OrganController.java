@@ -13,20 +13,26 @@ package com.cloudtec.modules.sys.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.cloudtec.common.config.Global;
 import com.cloudtec.common.controller.BaseController;
 import com.cloudtec.modules.sys.entity.Organ;
 import com.cloudtec.modules.sys.service.OrganService;
-import com.fasterxml.jackson.annotation.JsonFormat.Value;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
@@ -43,12 +49,44 @@ import com.google.common.collect.Maps;
  * @since JDK 1.6 
  */
 @Controller
-@RequestMapping(value="/sys/organ")
+@RequestMapping(value="${adminPath}/sys/organ")
 public class OrganController extends BaseController {
 	
 	@Autowired
 	@Qualifier(value="organService")
 	private OrganService organService;
+	
+	
+	/**
+	 * 
+	 * @Title: OrganController.list
+	 * @Author wangqi01 2014-9-18
+	 * @Description: TODO 单位列表分页展示和进入单位管理页面
+	 * @Permissions shiro sys:organ:view
+	 */
+	@RequiresPermissions("sys:organ:view")
+	@RequestMapping(value={"list",""})
+	public String list(@RequestParam(value = "page", defaultValue = "1") int pageNumber,
+			@RequestParam(value = "page.size", defaultValue = ContantsRbac.DEFAULT_PAGE_SIZE) int pageSize,
+			HttpServletRequest request,HttpServletResponse response,Model model,Organ organ){
+		Map<String, Object> searchMap = Maps.newHashMap();
+		searchMap.put("like_name", organ.getName());
+		searchMap.put("like_code", organ.getCode());
+		Page<Organ> page = organService.findOrgans(searchMap,pageNumber,pageSize,null);
+		model.addAttribute("organs", page);
+		model.addAttribute("organ", organ);
+		return "modules/sys/organList";
+	}
+	
+	@RequestMapping(value="import")
+	public String imprtOrgans(MultipartFile file,RedirectAttributes redirectAttributes){
+		addMessage(redirectAttributes, "单位信息导入成功，共导入");
+		return "redirect:"+Global.getAdminPath()+"/sys/organ/?repage";
+	}
+	
+	
+	
+	
 	
 	@RequiresUser
 	@ResponseBody

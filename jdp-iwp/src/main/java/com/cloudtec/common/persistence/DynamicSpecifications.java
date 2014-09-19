@@ -5,10 +5,12 @@
  *******************************************************************************/
 package com.cloudtec.common.persistence;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
@@ -18,6 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.cloudtec.common.utils.Collections3;
+import com.fasterxml.jackson.databind.deser.impl.ExternalTypeHandler.Builder;
 import com.google.common.collect.Lists;
 
 public class DynamicSpecifications {
@@ -36,7 +39,6 @@ public class DynamicSpecifications {
 						for (int i = 1; i < names.length; i++) {
 							expression = expression.get(names[i]);
 						}
-
 						// logic operator
 						switch (filter.operator) {
 						case EQ:
@@ -56,6 +58,9 @@ public class DynamicSpecifications {
 							break;
 						case LTE:
 							predicates.add(builder.lessThanOrEqualTo(expression, (Comparable) filter.value));
+							break;
+						case IN:
+							predicates.add(builder.in(expression).value(Lists.newArrayList(((String)filter.value).split(","))));
 							break;
 						}
 					}

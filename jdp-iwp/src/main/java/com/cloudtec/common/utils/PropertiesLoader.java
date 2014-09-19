@@ -155,6 +155,6 @@ public class PropertiesLoader {
 	}
 	public static void main(String[] args){
 		PropertiesLoader propertiesLoader = new PropertiesLoader("config/iwp.properties");
-		
+		System.out.println(propertiesLoader.getValue("adminPath"));
 	}
 }

@@ -25,16 +25,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.cloudtec.common.config.Global;
 import com.cloudtec.common.controller.BaseController;
 import com.cloudtec.common.utils.StringUtils;
 import com.cloudtec.modules.sys.entity.Menu;
 import com.cloudtec.modules.sys.service.MenuService;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-
-
 
 
 /**
@@ -44,7 +42,7 @@ import com.google.common.collect.Maps;
  * @date 2014-8-11 上午10:54:10
  */
 @Controller
-@RequestMapping(value = "/sys/menu")
+@RequestMapping(value = "${adminPath}/sys/menu")
 public class MenuController extends BaseController {
 	
 	@Autowired
@@ -69,9 +67,10 @@ public class MenuController extends BaseController {
 	}
 	
 	@RequestMapping(value = "save")
-	public String save(HttpServletRequest request, HttpServletResponse response,Model model){
-		
-		return "";
+	public String save(Menu menu,HttpServletRequest request, HttpServletResponse response,Model model){
+		//保存菜单信息
+		menuService.save(menu);
+		return "redirect:"+Global.getAdminPath()+"/sys/menu/?repage";
 	}
 	/**
 	 * 功能已完成,获取右侧菜单
@@ -85,8 +84,6 @@ public class MenuController extends BaseController {
 	@RequiresUser
 	@RequestMapping(value = "tree")
 	public String tree(HttpServletRequest request) {
-//		String parentId = request.getParameter("parentId");
-//		request.setAttribute("parentId", parentId);
 		return "modules/sys/menuTree";
 	}
 	/**

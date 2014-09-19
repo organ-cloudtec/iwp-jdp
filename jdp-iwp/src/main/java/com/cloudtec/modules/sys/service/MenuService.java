@@ -19,9 +19,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import com.cloudtec.common.service.BaseService;
 import com.cloudtec.modules.sys.dao.MenuDao;
 import com.cloudtec.modules.sys.entity.Menu;
-import com.cloudtec.modules.sys.entity.User;
 
 /**
  * @ClassName: MenuService
@@ -30,7 +30,7 @@ import com.cloudtec.modules.sys.entity.User;
  * @date 2014-8-11 上午10:57:53
  */
 @Service("menuService")
-public class MenuService {
+public class MenuService  extends BaseService {
 
 	@Autowired
 	@Qualifier("menuDao")
@@ -63,5 +63,29 @@ public class MenuService {
 	 */
 	public Menu findByRecid(String recid) {
 		return menuDao.findByRecid(recid);
+	}
+
+	/**
+	 * @Title: MenuService.save
+	 * @Author wangqi01 2014-9-15
+	 * @Description: TODO
+	 * @param menu void
+	 * 
+	 */
+	public void save(Menu menu) {
+		menuDao.save(menu);
+	}
+
+	/**
+	 * @Title: MenuService.findAllByRecids
+	 * @Author wangqi01 2014-9-16
+	 * @Description: TODO
+	 * @param menuIds
+	 * @return List<Menu>
+	 * 
+	 */
+	public List<Menu> findAllByRecids(String menuIds) {
+		
+		return menuDao.findAll();
 	}
 }

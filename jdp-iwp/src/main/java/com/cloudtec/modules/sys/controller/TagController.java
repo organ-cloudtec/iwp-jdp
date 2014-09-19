@@ -20,7 +20,7 @@ import com.cloudtec.common.controller.BaseController;
  * @version 2013-3-23
  */
 @Controller
-@RequestMapping(value = "tag")
+@RequestMapping(value = "${adminPath}/tag")
 public class TagController extends BaseController {
 	
 	/**

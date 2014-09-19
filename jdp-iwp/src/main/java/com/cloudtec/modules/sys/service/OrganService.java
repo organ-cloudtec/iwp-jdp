@@ -11,13 +11,19 @@
 package com.cloudtec.modules.sys.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import com.cloudtec.common.service.BaseService;
 import com.cloudtec.modules.sys.dao.OrganDao;
 import com.cloudtec.modules.sys.entity.Organ;
+import com.cloudtec.modules.sys.entity.User;
+import com.cloudtec.modules.sys.utils.PageBuildUtils;
 
 
 
@@ -32,7 +38,7 @@ import com.cloudtec.modules.sys.entity.Organ;
  * @since JDK 1.6 
  */
 @Service("organService")
-public class OrganService {
+public class OrganService extends BaseService {
 
 	@Autowired
 	@Qualifier(value="organDao")
@@ -47,5 +53,23 @@ public class OrganService {
 	 */
 	public List<Organ> findAll() {
 		return organDao.findAll();
+	}
+
+	/**
+	 * @Title: OrganService.findOrgans
+	 * @Author wangqi01 2014-9-18
+	 * @Description: TODO
+	 * @param searchMap
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param object
+	 * @return Page<Organ>
+	 * 
+	 */
+	public Page<Organ> findOrgans(Map<String, Object> searchParams,
+			int pageNumber, int pageSize, String sortType) {
+		PageBuildUtils<Organ> pageUtils = new PageBuildUtils<Organ>();
+		PageRequest pageRequest = pageUtils.buildPageRequest(pageNumber, pageSize, sortType);
+		return organDao.findAll(pageUtils.buildSpecification(searchParams),pageRequest);//spec,
 	}
 }
