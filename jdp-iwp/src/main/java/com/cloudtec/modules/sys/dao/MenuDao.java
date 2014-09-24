@@ -17,6 +17,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.cloudtec.modules.common.Constants;
 import com.cloudtec.modules.sys.entity.Menu;
 
 
@@ -43,5 +44,29 @@ public interface MenuDao extends JpaRepository<Menu, String>{
 	@Query("select distinct m from Menu m, Role r, User u where m in elements (r.menuList) and r in elements (u.roleList)" +
 			" and u.recid=:recid order by m.sort")
 	List<Menu> findByUserRecid(String recid);
+
+	/**
+	 * @Title: MenuDao.findByRecids
+	 * @Author wangqi01 2014-9-22
+	 * @Description: TODO
+	 * @param menuIds
+	 * @return List<Menu>
+	 * 
+	 */
+	@Query("select m from Menu m where m.recid in (?1) " +
+			"and m.isShow = "+ Constants.SHOW +
+			" order by m.sort")
+	List<Menu> findByRecids(String menuIds);
+
+	/**
+	 * @Title: MenuDao.findAllShow
+	 * @Author wangqi01 2014-9-22
+	 * @Description: TODO
+	 * @return List<Menu>
+	 */
+	@Query("select m from Menu m where " +
+			"m.isShow = "+ Constants.SHOW +
+			" order by m.sort")
+	List<Menu> findAllShow();
 
 }

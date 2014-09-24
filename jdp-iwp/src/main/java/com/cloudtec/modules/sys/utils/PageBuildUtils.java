@@ -56,6 +56,16 @@ public class PageBuildUtils<T> {
 		return null;
 	}
 	/**
+	 * 创建动态查询条件组合.
+	 */
+	public Specification<T> buildSpecification(T entity) {
+		Map<String, SearchFilter> filters = SearchFilter.parse(entity);
+		if(filters.size()>0)
+			return DynamicSpecifications.bySearchFilter(filters.values(), entityClass);
+		return null;
+	}
+	
+	/**
 	 * 创建分页请求.
 	 */
 	public PageRequest buildPageRequest(int pageNumber, int pagzSize, String sortType) {

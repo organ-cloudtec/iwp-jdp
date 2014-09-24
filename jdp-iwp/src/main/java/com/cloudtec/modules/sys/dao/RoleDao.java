@@ -12,6 +12,7 @@ package com.cloudtec.modules.sys.dao;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.cloudtec.modules.sys.entity.Role;
@@ -26,5 +27,16 @@ import com.cloudtec.modules.sys.entity.Role;
  */
 @Repository("roleDao")
 public interface RoleDao extends JpaRepository<Role,String> {
+
+	/**
+	 * @Title: RoleDao.findByName
+	 * @Author wangqi01 2014-9-22
+	 * @Description: TODO
+	 * @param roleName
+	 * @return Role
+	 * 
+	 */
+	@Query("select r from Role r where r.name =?1")
+	Role findByName(String roleName);
 
 }

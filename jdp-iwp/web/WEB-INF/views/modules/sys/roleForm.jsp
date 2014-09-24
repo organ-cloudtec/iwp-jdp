@@ -9,13 +9,39 @@
 		     display:inline-block;
 		} 
 	</style>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#name").focus();
+			$("#inputForm").validate({
+				rules: {
+					name: {remote: "${ctx}/sys/role/checkRolename?oldrolename=" + encodeURIComponent('${role.name}')},
+				},
+				messages: {
+					name: {remote: "角色名称已存在"},
+				},
+				submitHandler: function(form){
+					loading('正在提交，请稍等...');
+					form.submit();
+				},
+				errorContainer: "#messageBox",
+				errorPlacement: function(error, element) {
+					$("#messageBox").text("输入有误，请先更正。");
+					if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
+						error.appendTo(element.parent().parent());
+					} else {
+						error.insertAfter(element);
+					}
+				}
+			}); 
+		});
+	</script>
 </head>
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/sys/role/">角色列表</a></li>
 		<li class="active"><a href="${ctx}/sys/role/form?recid=${role.recid}">角色<shiro:hasPermission name="sys:role:edit">${not empty role.recid?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sys:role:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
-	<form:form modelAttribute="role" action="${ctx}/sys/role/save" method="post"class="form-horizontal">
+	<form:form modelAttribute="role" action="${ctx}/sys/role/save" method="post"class="form-horizontal" id="inputForm">
 		<form:hidden path="recid"/>
 		<tags:message content="${message}"/>
 		<!-- Text input-->

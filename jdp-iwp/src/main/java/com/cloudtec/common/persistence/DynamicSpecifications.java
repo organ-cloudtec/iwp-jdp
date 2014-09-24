@@ -5,12 +5,10 @@
  *******************************************************************************/
 package com.cloudtec.common.persistence;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
@@ -20,7 +18,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.cloudtec.common.utils.Collections3;
-import com.fasterxml.jackson.databind.deser.impl.ExternalTypeHandler.Builder;
 import com.google.common.collect.Lists;
 
 public class DynamicSpecifications {

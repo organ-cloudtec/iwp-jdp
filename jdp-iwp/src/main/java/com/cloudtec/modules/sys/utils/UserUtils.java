@@ -13,6 +13,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.UnavailableSecurityManagerException;
 import org.apache.shiro.session.InvalidSessionException;
 import org.apache.shiro.subject.Subject;
+import org.springframework.data.domain.Sort;
 
 import com.cloudtec.common.utils.SpringContextHolder;
 import com.cloudtec.modules.sys.dao.MenuDao;
@@ -100,7 +101,7 @@ public class UserUtils  {
 		if (menuList == null){
 			User user = getUser();
 			if (user.isAdmin()){
-				menuList = menuDao.findAll();
+				menuList = menuDao.findAll(new Sort("sort"));
 			}else{
 				menuList = menuDao.findByUserRecid(user.getRecid());
 			}

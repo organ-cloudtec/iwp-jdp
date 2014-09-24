@@ -12,6 +12,7 @@ package com.cloudtec.modules.sys.service;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import com.cloudtec.common.service.BaseService;
 import com.cloudtec.modules.sys.dao.RoleDao;
 import com.cloudtec.modules.sys.entity.Role;
+import com.cloudtec.modules.sys.entity.User;
 
 
 
@@ -68,6 +70,10 @@ public class RoleService  extends BaseService {
 	 */
 	public boolean delete(String recid) {
 		try {
+			Role role = roleDao.findOne(recid);
+			for(User user : role.getUserList()){
+				user.getRoleList().remove(role);
+			}
 			roleDao.delete(recid);
 		} catch (Exception e) {
 			logger.error("根据角色ID '"+recid+"' 删除角色，失败。\n"+e.getMessage());
@@ -85,5 +91,18 @@ public class RoleService  extends BaseService {
 	 */
 	public void save(Role role) {
 		roleDao.save(role);
+	}
+
+	/**
+	 * @Title: RoleService.findByName
+	 * @Author wangqi01 2014-9-22
+	 * @Description: TODO
+	 * @param roleName
+	 * @return Object
+	 * 
+	 */
+	public Role findByName(String roleName) {
+		return roleDao.findByName(roleName);
+		
 	}
 }

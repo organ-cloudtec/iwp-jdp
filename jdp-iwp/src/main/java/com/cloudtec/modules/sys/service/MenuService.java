@@ -17,11 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.cloudtec.common.service.BaseService;
 import com.cloudtec.modules.sys.dao.MenuDao;
 import com.cloudtec.modules.sys.entity.Menu;
+import com.cloudtec.modules.sys.entity.Role;
 
 /**
  * @ClassName: MenuService
@@ -38,19 +40,17 @@ public class MenuService  extends BaseService {
 
 	public Page<Menu> findMenus(Map<String, Object> searchMap, int pageNumber,
 			int pageSize, Object sort) {
-		;
 		return menuDao.findAll(new PageRequest(pageNumber - 1, pageSize));
 	}
 
 	/**
-	 * @Title: MenuService.findAll
-	 * @Author wangqi01 2014-8-19
-	 * @Description: TODO
+	 * @Title: MenuService.findAllExpectNoShow
+	 * @Author wangqi01 2014-9-22
+	 * @Description: TODO 默认显示
 	 * @return List<Menu>
-	 * 
 	 */
-	public List<Menu> findAll() {
-		return menuDao.findAll();
+	public List<Menu> findAllExpectNoShow() {
+		return menuDao.findAllShow();
 	}
 
 	/**
@@ -85,8 +85,7 @@ public class MenuService  extends BaseService {
 	 * 
 	 */
 	public List<Menu> findAllByRecids(String menuIds) {
-		
-		return menuDao.findAll();
+		return menuDao.findByRecids(menuIds);
 	}
 
 	/**
@@ -98,11 +97,27 @@ public class MenuService  extends BaseService {
 	 */
 	public boolean delete(Menu menu) {
 		try{
+			menu = menuDao.findByRecid(menu.getRecid());
+			for(Role role : menu.getRoleList()){
+				role.getMenuList().remove(menu);
+			}
 			menuDao.delete(menu.getRecid());
 		}catch(Exception e){
 			logger.error("删除菜单失败，菜单ID :"+ menu.getRecid(), e);
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * @Title: MenuService.findAll
+	 * @Author wangqi01 2014-9-22
+	 * @Description: TODO
+	 * @return List<Menu>
+	 * 
+	 */
+	public List<Menu> findAll() {
+		//默认按照 sort升序排序
+		return menuDao.findAll(new Sort("sort"));
 	}
 }

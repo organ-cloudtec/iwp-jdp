@@ -8,6 +8,7 @@ package com.cloudtec.modules.sys.security;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -15,7 +16,6 @@ import javax.annotation.PostConstruct;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAccount;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -23,12 +23,15 @@ import org.apache.shiro.cache.Cache;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
-import org.apache.shiro.util.ByteSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.cloudtec.common.utils.Encodes;
+import com.cloudtec.common.utils.StringUtils;
+import com.cloudtec.modules.sys.entity.Menu;
 import com.cloudtec.modules.sys.entity.Role;
 import com.cloudtec.modules.sys.entity.User;
 import com.cloudtec.modules.sys.service.UserService;
+import com.cloudtec.modules.sys.utils.UserUtils;
 import com.google.common.collect.Collections2;
 import com.google.common.base.Function;
 /**
@@ -41,6 +44,7 @@ import com.google.common.base.Function;
 public class SystemAuthorizingRealm extends AuthorizingRealm {
 
 	private UserService userService;
+	private Logger logger =LoggerFactory.getLogger(SystemAuthorizingRealm.class);
 	/**
 	 * 获取系统业务对象
 	 */
@@ -67,17 +71,15 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 				throw new CaptchaException("验证码错误.");
 			}
 		}*/
-		System.out.println("进入方法doGetAuthenticationInfo ---->SystemAuthorizingRealm 中");
+		logger.info(token.getUsername()+"登陆，进入 doGetAuthenticationInfo 方法处理。");
 		User user = userService.findUserByLoginName(token.getUsername());
-		
 		if (user != null) {
-			
 		/*	
 		 //后台数据库中密码使用密文存储时使用，使用明文存储时注释
 		 byte[] salt = Encodes.decodeHex(user.getPassword().substring(0,16));
 			return new SimpleAuthenticationInfo(new Principal(user), 
 					user.getPassword().substring(16),ByteSource.Util.bytes(salt), getName());
-		*/
+		*/ 
 			//密码使用明文存储时使用
 			return new SimpleAuthenticationInfo(new Principal(user), 
 					user.getPassword(),null, getName());
@@ -94,22 +96,21 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 		Principal principal = (Principal) getAvailablePrincipal(principals);
 		User user = userService.findUserByLoginName(principal.getLoginName());
 		if (user != null) {
-//			UserUtils.putCache("user", user);
+			UserUtils.putCache("user", user);
 			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-//			List<Menu> list = UserUtils.getMenuList();
-//			for (Menu menu : list){
-//				if (StringUtils.isNotBlank(menu.getPermission())){
-//					// 添加基于Permission的权限信息
-//					for (String permission : StringUtils.split(menu.getPermission(),",")){
-//						info.addStringPermission(permission);
-//					}
-//				}
-//			}
+			List<Menu> list = UserUtils.getMenuList();
+			for (Menu menu : list){
+				if (StringUtils.isNotBlank(menu.getPermissionFlag())){
+					// 添加基于Permission的权限信息
+					for (String permission : StringUtils.split(menu.getPermissionFlag(),",")){
+						info.addStringPermission(permission);
+					}
+				}
+			}
 //			// 更新登录IP和时间
 //			getSystemService().updateUserLoginInfo(user.getId());
 			
 			Collection<String> roleList = Collections2.transform(user.getRoleList(), new Function<Role, String>() {
-
 				public String apply(Role role) {
 					return role.getName();
 				}
@@ -161,14 +162,14 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 		private static final long serialVersionUID = 1L;
 		
 		private String id;
-		private String loginName;
-		private String name;
+		private String loginName; 
+		private String name; //别名
 		private Map<String, Object> cacheMap;
 
 		public Principal(User user) {
 			this.id = user.getRecid();
-			this.loginName = user.getName();
-			this.name = user.getUsername();
+			this.loginName = user.getUsername();
+			this.name = user.getName();
 		}
 
 		public String getId() {

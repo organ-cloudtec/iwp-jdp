@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 import com.cloudtec.common.service.BaseService;
 import com.cloudtec.modules.sys.dao.OrganDao;
 import com.cloudtec.modules.sys.entity.Organ;
-import com.cloudtec.modules.sys.entity.User;
 import com.cloudtec.modules.sys.utils.PageBuildUtils;
 
 

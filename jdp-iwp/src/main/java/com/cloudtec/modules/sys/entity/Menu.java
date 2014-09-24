@@ -3,6 +3,7 @@ package com.cloudtec.modules.sys.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,7 +19,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 
 import com.cloudtec.common.persistence.BaseEntity;
-import com.cloudtec.modules.sys.controller.ContantsRbac;
+import com.cloudtec.modules.common.Constants;
 
 @Entity
 @DynamicInsert @DynamicUpdate
@@ -48,7 +49,7 @@ public class Menu extends BaseEntity<Menu>{
 		this();
 		this.recid = recid;
 	}
-	@ManyToMany(mappedBy="menuList",fetch=FetchType.LAZY)
+	@ManyToMany(mappedBy="menuList",fetch=FetchType.EAGER,cascade={CascadeType.MERGE})
 	public List<Role> getRoleList() {
 		return roleList;
 	}
@@ -171,6 +172,6 @@ public class Menu extends BaseEntity<Menu>{
 	
 	@Transient
 	public static boolean isRoot(String recid){
-		return recid != null && recid.equals(ContantsRbac.RECID_MENU_ROOTID);
+		return recid != null && recid.equals(Constants.RECID_MENU_ROOTID);
 	}
 }

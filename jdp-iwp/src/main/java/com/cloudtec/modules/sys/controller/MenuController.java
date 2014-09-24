@@ -32,6 +32,7 @@ import com.cloudtec.common.controller.BaseController;
 import com.cloudtec.common.utils.StringUtils;
 import com.cloudtec.modules.sys.entity.Menu;
 import com.cloudtec.modules.sys.service.MenuService;
+import com.cloudtec.modules.sys.utils.UserUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
@@ -61,8 +62,16 @@ public class MenuController extends BaseController {
 	
 	@RequestMapping(value="form")
 	public String form(Menu menu, Model model){
-		if(StringUtils.isNotBlank(menu.getRecid()))
+		if(StringUtils.isNotBlank(menu.getRecid())){
 			menu = menuService.findByRecid(menu.getRecid());
+		}else{
+			if(menu.getParent() == null ||	StringUtils.isBlank(menu.getParent().getRecid())){
+				menu.setParent(new Menu("TOP_MENU_ID"));
+			}
+			menu.setParent(menuService.findByRecid(menu.getParent().getRecid()));
+		}
+			
+		
 		model.addAttribute("menu", menu);
 		return "modules/sys/menuForm";
 	}
@@ -86,12 +95,9 @@ public class MenuController extends BaseController {
 		}else{
 			addMessage(redirectAttributes, "删除菜单失败。");
 		}
+		UserUtils.removeCache(UserUtils.CACHE_MENU_LIST);
 		return "redirect:"+Global.getAdminPath()+"/sys/menu/?repage";
 	}
-	
-	
-	
-	
 	/**
 	 * 功能已完成,获取右侧菜单
 	 * @Title: MenuController.tree

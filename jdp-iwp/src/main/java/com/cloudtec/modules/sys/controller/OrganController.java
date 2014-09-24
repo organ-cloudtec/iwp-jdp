@@ -31,6 +31,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cloudtec.common.config.Global;
 import com.cloudtec.common.controller.BaseController;
+import com.cloudtec.modules.common.Constants;
 import com.cloudtec.modules.sys.entity.Organ;
 import com.cloudtec.modules.sys.service.OrganService;
 import com.google.common.collect.Lists;
@@ -67,7 +68,7 @@ public class OrganController extends BaseController {
 	@RequiresPermissions("sys:organ:view")
 	@RequestMapping(value={"list",""})
 	public String list(@RequestParam(value = "page", defaultValue = "1") int pageNumber,
-			@RequestParam(value = "page.size", defaultValue = ContantsRbac.DEFAULT_PAGE_SIZE) int pageSize,
+			@RequestParam(value = "page.size", defaultValue = Constants.DEFAULT_PAGE_SIZE) int pageSize,
 			HttpServletRequest request,HttpServletResponse response,Model model,Organ organ){
 		Map<String, Object> searchMap = Maps.newHashMap();
 		searchMap.put("like_name", organ.getName());

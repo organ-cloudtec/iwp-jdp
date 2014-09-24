@@ -3,6 +3,7 @@ package com.cloudtec.modules.sys.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -15,7 +16,6 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.cloudtec.common.persistence.BaseEntity;
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.google.common.collect.Lists;
 
 @Entity
@@ -24,7 +24,6 @@ import com.google.common.collect.Lists;
 public class Role extends BaseEntity<Role>{
 
 	private static final long serialVersionUID = -35684964401400002L;
-	
 	private String name;
 	private String nameMng;
 	private List<Menu> menuList = new ArrayList<Menu>();
@@ -33,7 +32,7 @@ public class Role extends BaseEntity<Role>{
 	private String menuNames;
 	
 	
-	@ManyToMany(mappedBy = "roleList", fetch=FetchType.LAZY)
+	@ManyToMany(mappedBy = "roleList", fetch=FetchType.EAGER,cascade={CascadeType.MERGE})
 	public List<User> getUserList() {
 		return userList;
 	}
@@ -67,11 +66,12 @@ public class Role extends BaseEntity<Role>{
 		for(Menu menu : menuList){
 			strBuilder.append(menu.getRecid()).append(",");
 		}
-		menuNames = strBuilder.toString();
+		menuIds = strBuilder.toString();
 		return menuIds;
 	}
 	@Transient
 	public String getMenuNames() {
+		menuNames = null;
 		StringBuilder strBuilder = new StringBuilder();
 		for(Menu menu : menuList){
 			strBuilder.append(menu.getName()).append(",");

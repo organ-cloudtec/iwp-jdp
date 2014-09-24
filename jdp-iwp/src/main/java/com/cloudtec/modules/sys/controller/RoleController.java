@@ -20,13 +20,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cloudtec.common.config.Global;
 import com.cloudtec.common.controller.BaseController;
 import com.cloudtec.common.utils.StringUtils;
 import com.cloudtec.modules.sys.entity.Role;
-import com.cloudtec.modules.sys.service.MenuService;
 import com.cloudtec.modules.sys.service.RoleService;
 
 /**
@@ -42,11 +42,6 @@ public class RoleController extends BaseController {
 	@Autowired
 	@Qualifier("roleService")
 	private RoleService roleService;
-	
-	@Autowired
-	@Qualifier("menuService")
-	private MenuService menuService;
-	
 	
 //	@RequiresPermissions("sys:role:view")
 	@RequestMapping(value = {"list", ""})
@@ -77,16 +72,13 @@ public class RoleController extends BaseController {
 			return form(role,model);
 		}
 		boolean isSuccess = roleService.delete(role.getRecid());
-//		role.getMenuList().removeAll(role.getMenuList());
 		addMessage(redirectAttributes, "删除角色"+(isSuccess?"成功":"失败"));
 		return "redirect:"+Global.getAdminPath()+"/sys/role/?repage";
 	}
 	
 	@RequestMapping(value="/save")
 	public String save(Role role, Model model, RedirectAttributes redirectAttributes){
-		
 		//获取用户角色
-	//	List<Menu> menus = menuService.findAllByRecids(role.getMenuIds());
 		if(StringUtils.isEmpty(role.getName())){
 			addMessage(model,"新增角色失败,角色名称不可为空。");
 			return form(role, model);
@@ -95,5 +87,18 @@ public class RoleController extends BaseController {
 		addMessage(redirectAttributes, "新增角色 '"+role.getName()+"' 成功。");
 		return "redirect:"+Global.getAdminPath()+"/sys/role/?repage";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="checkRolename")
+	public String checkRoleName(String name,String oldrolename){
+		if(!StringUtils.isEmpty(name) && name.equals(oldrolename)){
+			return "true";
+		}else if(!StringUtils.isEmpty(name) &&
+				roleService.findByName(name) == null){
+			return "true";
+		}
+		return "false";
+	}
+	
 	
 }
