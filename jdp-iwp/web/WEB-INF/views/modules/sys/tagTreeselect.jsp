@@ -7,7 +7,7 @@
 	<%@include file="/WEB-INF/views/include/head.jsp" %>
 	<%@include file="/WEB-INF/views/include/treeview.jsp" %>
 	<script type="text/javascript">
-		var api = art.dialog.open.api;
+		var dialog = top.dialog.get(window);
 		var key, lastValue = "", nodeList = [];
 		var tree, setting = {view:{selectedMulti:false},check:{enable:"${checked}",nocheckInherit:true},
 				data:{simpleData:{enable:true}},
@@ -23,7 +23,7 @@
 					}
 				}, 
 				onDblClick:function(){
-					api._click("确定");
+					dialog._trigger("ok");
 				}}};
 		$(document).ready(function(){
 			$.get("${ctx}${url}${fn:indexOf(url,'?')==-1?'?':'&'}&extId=${extId}&module=${module}&t="+new Date().getTime(), function(zNodes){
@@ -103,9 +103,9 @@
 </head>
 <body>
 	<div style="position:absolute;right:8px;top:5px;cursor:pointer;" onclick="search();">
-		<i class="icon-search"></i><label id="txt">搜索</label>
+		<i class="glyphicon glyphicon-search"></i><label id="txt">搜索</label>
 	</div>
-	<div id="search" class="control-group hide" style="padding:10px 0 0 15px;">
+	<div id="search" class="control-group" style="padding:10px 0 0 15px;display: none;">
 		<label for="key" class="control-label" style="float:left;padding:5px 5px 3px;">关键字：</label>
 		<input type="text" class="empty" id="key" name="key" maxlength="50" style="width:180px;">
 	</div>

@@ -41,7 +41,7 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">名:</label>
+			<label class="control-label">别名:</label>
 			<div class="controls">
 				<form:input path="href" htmlEscape="false" maxlength="50" class="required"/>
 			</div>
@@ -49,8 +49,7 @@
 		<div class="control-group">
 			<label class="control-label">目标:</label>
 			<div class="controls">
-				<form:input path="target" htmlEscape="false" maxlength="10"/>
-				<form:select path="target" items="${fns:getDictList('target')}"></form:select>
+				<form:select path="target" items="${fns:getDictList('target')}" htmlEscape="false" itemLabel="label" itemValue="value"></form:select>
 			</div>
 		</div>
 		<div class="control-group">
@@ -72,6 +71,6 @@
 			</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
-	</form>
+	</form:form>
 </body>
 </html>
