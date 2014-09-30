@@ -29,7 +29,6 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
-import org.hibernate.validator.constraints.Length;
 
 import com.cloudtec.common.persistence.IdEntity;
 import com.google.common.collect.Lists;
@@ -97,7 +96,6 @@ public class Article extends IdEntity {
 		this.category = category;
 	}
 
-	@Length(min=1, max=255)
 	public String getTitle() {
 		return title;
 	}
@@ -106,7 +104,6 @@ public class Article extends IdEntity {
 		this.title = title;
 	}
 
-    @Length(min=0, max=255)
     public String getLink() {
         return link;
     }
@@ -115,7 +112,6 @@ public class Article extends IdEntity {
         this.link = link;
     }
 
-	@Length(min=0, max=50)
 	public String getColor() {
 		return color;
 	}
@@ -124,7 +120,6 @@ public class Article extends IdEntity {
 		this.color = color;
 	}
 
-	@Length(min=0, max=255)
 	public String getImage() {
 		return image;
 	}
@@ -133,7 +128,6 @@ public class Article extends IdEntity {
         this.image = image;//CmsUtils.formatImageSrcToDb(image);
 	}
 
-	@Length(min=0, max=255)
 	public String getKeywords() {
 		return keywords;
 	}
@@ -142,7 +136,6 @@ public class Article extends IdEntity {
 		this.keywords = keywords;
 	}
 
-	@Length(min=0, max=255)
 	public String getDescription() {
 		return description;
 	}
@@ -176,7 +169,6 @@ public class Article extends IdEntity {
 		this.hits = hits;
 	}
 
-	@Length(min=0, max=10)
 	public String getPosid() {
 		return posid;
 	}

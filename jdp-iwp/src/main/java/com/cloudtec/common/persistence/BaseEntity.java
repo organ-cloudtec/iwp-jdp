@@ -10,13 +10,13 @@
 
 package com.cloudtec.common.persistence;
 
+
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlTransient;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 
+import com.cloudtec.modules.common.Constants;
 import com.cloudtec.modules.sys.entity.User;
 import com.cloudtec.modules.sys.utils.UserUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -35,13 +35,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @MappedSuperclass
 public class BaseEntity<T> extends IdEntity {
 	/**
-	 * 当前实体分页对象
-	 */
-	protected Page<T> page;
-	/**
 	 * 当前用户
 	 */
 	protected User currentUser;
+	
+	/**
+	 * 传递分页参数使用
+	 * pageNo 要查询第几页
+	 * pageSize 每页记录条数
+	 */
+	protected Integer  pageNo;
+	protected Integer  pageSize;
 	
 	@JsonIgnore
 	@XmlTransient
@@ -57,21 +61,24 @@ public class BaseEntity<T> extends IdEntity {
 		this.currentUser = currentUser;
 	}
 
-	@JsonIgnore
-	@XmlTransient
 	@Transient
-	public Page<T> getPage() {
-		if (page == null){
-			page = new PageImpl<T>(null);
-		}
-		return page;
+	public Integer getPageNo() {
+		return pageNo==null?1:pageNo;
 	}
-	
-	public Page<T> setPage(Page<T> page) {
-		this.page = page;
-		return page;
+	@Transient
+	public Integer getPageSize() {
+		return pageSize==null?Constants.DEFAULT_PAGE_SIZE:pageSize;
 	}
-	
+
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+
+
 	// 显示/隐藏
 	public static final String SHOW = "1";
 	public static final String HIDE = "0";

@@ -1,6 +1,5 @@
 <%@page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
-<%@include file="/WEB-INF/views/include/head.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +7,16 @@
 	<style type="text/css">
 		.sort{color:#0663A2;cursor:pointer;}
 	</style>
+	<script type="text/javascript">
+	 function page(n,s){
+		 $("#pageNo").val(n);
+			if(s != null && s != "")
+				$("#pageSize").val(s);
+			$("#searchForm").submit();
+ 		return false;
+	 }
+	
+	</script>
 </head>
 <body>
 	<c:if test="${not empty message}">
@@ -26,6 +35,8 @@
 		<li><a href="${ctx}/sys/organ/form">单位添加</a></li>
 	</ul>
 	<form:form id="searchForm" modelAttribute="organ" action="${ctx}/sys/organ/" method="post" class="breadcrumb form-search">
+		<input id="pageNo" name="pageNo" type="hidden" value="${organ.pageNo}"/>
+		<input id="pageSize" name="pageSize" type="hidden" value="${organ.pageSize}"/>
 		<div>
 			<label>单位代码：</label><form:input path="code" htmlEscape="false" maxlength="50" class="input-small"/>
 		</div>
@@ -54,7 +65,7 @@
 		</c:forEach>
 		</tbody>
 	</table>
-	<tags:pagination page="${organs}" paginationSize="10"/>
+	<tags:pagination page="${organs}" paginationSize="10" pageSize="${organ.pageSize}"/>
 	<script type="text/javascript">
 	$(document).ready(function() {
 		$("#btnImport").click(function(){

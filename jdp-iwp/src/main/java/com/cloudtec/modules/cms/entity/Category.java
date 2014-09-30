@@ -23,7 +23,6 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Where;
-import org.hibernate.validator.constraints.Length;
 
 import com.cloudtec.common.persistence.IdEntity;
 import com.cloudtec.common.persistence.Operator;
@@ -96,7 +95,6 @@ public class Category extends IdEntity {
 		this.parent = parent;
 	}
 
-	@Length(min=1, max=255)
 	public String getParentIds() {
 		return parentIds;
 	}
@@ -106,7 +104,6 @@ public class Category extends IdEntity {
 	}
 	
 	@SearchField(operator=Operator.LIKE)
-	@Length(min=0, max=20)
 	public String getModule() {
 		return module;
 	}
@@ -115,7 +112,6 @@ public class Category extends IdEntity {
 		this.module = module;
 	}
 	@SearchField(operator=Operator.LIKE)
-	@Length(min=0, max=100)
 	public String getName() {
 		return name;
 	}
@@ -124,7 +120,6 @@ public class Category extends IdEntity {
 		this.name = name;
 	}
 
-	@Length(min=0, max=255)
 	public String getImage() {
 		return image;
 	}
@@ -133,7 +128,6 @@ public class Category extends IdEntity {
 		this.image = image;
 	}
 
-	@Length(min=0, max=255)
 	public String getHref() {
 		return href;
 	}
@@ -142,7 +136,6 @@ public class Category extends IdEntity {
 		this.href = href;
 	}
 
-	@Length(min=0, max=20)
 	public String getTarget() {
 		return target;
 	}
@@ -151,7 +144,6 @@ public class Category extends IdEntity {
 		this.target = target;
 	}
 	@SearchField(operator=Operator.LIKE)
-	@Length(min=0, max=255)
 	public String getDescription() {
 		return description;
 	}
@@ -160,7 +152,6 @@ public class Category extends IdEntity {
 		this.description = description;
 	}
 	@SearchField(operator=Operator.LIKE)
-	@Length(min=0, max=255)
 	public String getKeywords() {
 		return keywords;
 	}
@@ -178,7 +169,6 @@ public class Category extends IdEntity {
 		this.sort = sort;
 	}
 
-	@Length(min=1, max=1)
 	public String getInMenu() {
 		return inMenu;
 	}
@@ -187,7 +177,6 @@ public class Category extends IdEntity {
 		this.inMenu = inMenu;
 	}
 
-	@Length(min=1, max=1)
 	public String getInList() {
 		return inList;
 	}
@@ -196,7 +185,6 @@ public class Category extends IdEntity {
 		this.inList = inList;
 	}
 
-	@Length(min=1, max=1)
 	public String getShowModes() {
 		return showModes;
 	}
@@ -205,7 +193,6 @@ public class Category extends IdEntity {
 		this.showModes = showModes;
 	}
 	
-	@Length(min=1, max=1)
 	public String getAllowComment() {
 		return allowComment;
 	}
@@ -214,7 +201,6 @@ public class Category extends IdEntity {
 		this.allowComment = allowComment;
 	}
 
-	@Length(min=1, max=1)
 	public String getIsAudit() {
 		return isAudit;
 	}

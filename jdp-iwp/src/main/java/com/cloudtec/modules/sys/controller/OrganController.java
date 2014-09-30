@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,7 +32,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cloudtec.common.config.Global;
 import com.cloudtec.common.controller.BaseController;
-import com.cloudtec.modules.common.Constants;
+import com.cloudtec.common.utils.StringUtils;
 import com.cloudtec.modules.sys.entity.Organ;
 import com.cloudtec.modules.sys.service.OrganService;
 import com.google.common.collect.Lists;
@@ -67,27 +68,56 @@ public class OrganController extends BaseController {
 	 */
 	@RequiresPermissions("sys:organ:view")
 	@RequestMapping(value={"list",""})
-	public String list(@RequestParam(value = "page", defaultValue = "1") int pageNumber,
-			@RequestParam(value = "page.size", defaultValue = Constants.DEFAULT_PAGE_SIZE) int pageSize,
-			HttpServletRequest request,HttpServletResponse response,Model model,Organ organ){
+	public String list(HttpServletRequest request,HttpServletResponse response,Model model,Organ organ){
 		Map<String, Object> searchMap = Maps.newHashMap();
 		searchMap.put("like_name", organ.getName());
 		searchMap.put("like_code", organ.getCode());
-		Page<Organ> page = organService.findOrgans(searchMap,pageNumber,pageSize,null);
+		Page<Organ> page = organService.findOrgans(searchMap,organ.getPageNo(),organ.getPageSize(),null);
 		model.addAttribute("organs", page);
 		model.addAttribute("organ", organ);
 		return "modules/sys/organList";
 	}
+	@RequiresPermissions("sys:organ:view")
+	@RequestMapping(value="form")
+	public String form(Organ organ , Model model){
+		//查看
+		if(StringUtils.isNotBlank(organ.getRecid())){
+			organ = organService.findByRecid(organ.getRecid());
+		}
+		/*暂时不考虑单位树情况
+		 * else {
+			//增加下级单位
+			if(organ.getParent()== null || StringUtils.isBlank(organ.getParent().getRecid())){
+				organ.setParent(new Organ(Constants.RECID_MENU_ROOTID));
+			}
+			organ.setParent(organService.findByRecid(organ.getParent().getRecid()));
+		}*/
+		model.addAttribute("organ", organ);
+		return "modules/sys/organForm";
+	}
 	
+	@RequestMapping(value="save")
+	public String saveOrgan(String oldorganname,  Organ organ,Model model, RedirectAttributes redirectAttributes){
+			
+		if("false".equals(checkOrganName(organ.getName(), oldorganname))){
+			addMessage(model, "保存单位 "+organ.getName()+" 失败，单位名称已存在。");
+			return form(organ, model);
+		}
+		//验证单位代码
+		boolean isSave = organService.save(organ);
+		if(isSave){
+			addMessage(redirectAttributes, "保存单位"+organ.getName()+"成功！");
+		}else{
+			addMessage(model, "保存单位"+organ.getName()+"失败！");
+			return form(organ, model);
+		}
+		 return "redirect:"+Global.getAdminPath()+"/sys/organ?repage";
+	}
 	@RequestMapping(value="import")
 	public String imprtOrgans(MultipartFile file,RedirectAttributes redirectAttributes){
 		addMessage(redirectAttributes, "单位信息导入成功，共导入");
 		return "redirect:"+Global.getAdminPath()+"/sys/organ/?repage";
 	}
-	
-	
-	
-	
 	
 	@RequiresUser
 	@ResponseBody
@@ -109,5 +139,17 @@ public class OrganController extends BaseController {
 			}
 		}
 		return mapList;
+	}
+	
+	@ResponseBody
+	@RequiresPermissions("sys:organ:edit")
+	@RequestMapping("checkorganname")
+	public String checkOrganName(String organname,String oldorganname){
+		if(organname != null && organname.equals(oldorganname)){
+			return "true";
+		}else if(organname != null && organService.findByName(organname)==null){
+			return "true";
+		}
+		return "false";
 	}
 }

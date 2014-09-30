@@ -3,8 +3,6 @@
 <html>
 <head>
 	<title>栏目管理</title>
-	<meta name="decorator" content="default"/>
-	<%@include file="/WEB-INF/views/include/head.jsp" %>
 	<%@include file="/WEB-INF/views/include/treeview.jsp" %>
 	<script type="text/javascript">
     	function updateSort() {

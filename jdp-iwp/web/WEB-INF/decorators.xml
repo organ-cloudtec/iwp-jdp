@@ -1,0 +1,9 @@
+<decorators defaultdir="/WEB-INF/views">
+	<excludes>
+        <pattern>/index.jsp*</pattern>
+        <pattern>/a/login</pattern>
+    </excludes>
+    <decorator name="default" page="layouts/default.jsp">
+        <pattern>/*</pattern>
+    </decorator>
+</decorators>

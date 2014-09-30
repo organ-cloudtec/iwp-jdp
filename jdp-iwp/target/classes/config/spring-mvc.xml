@@ -12,6 +12,7 @@
                 http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 	<mvc:annotation-driven />
 	
+	
 	<!--引入 配置文件 -->
 	<context:property-placeholder location="classpath*:config/iwp.properties"
 	 ignore-unresolvable="true"/>
@@ -26,7 +27,11 @@
 		<property name="prefix" value="${web.views.prefix}"/>
 		<property name="suffix" value="${web.views.suffix}"/>
 	</bean>
-	
+	<!-- 全部使用UTF-8编码 -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="contentType" value="text/html; charset=UTF-8"/>
+	</bean>
 	<!-- 支持Shiro对Controller的方法级AOP安全控制 begin-->
 	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
 		<property name="proxyTargetClass" value="true" />

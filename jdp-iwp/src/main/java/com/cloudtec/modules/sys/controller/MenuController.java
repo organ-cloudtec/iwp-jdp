@@ -30,6 +30,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.cloudtec.common.config.Global;
 import com.cloudtec.common.controller.BaseController;
 import com.cloudtec.common.utils.StringUtils;
+import com.cloudtec.modules.common.Constants;
 import com.cloudtec.modules.sys.entity.Menu;
 import com.cloudtec.modules.sys.service.MenuService;
 import com.cloudtec.modules.sys.utils.UserUtils;
@@ -66,7 +67,7 @@ public class MenuController extends BaseController {
 			menu = menuService.findByRecid(menu.getRecid());
 		}else{
 			if(menu.getParent() == null ||	StringUtils.isBlank(menu.getParent().getRecid())){
-				menu.setParent(new Menu("TOP_MENU_ID"));
+				menu.setParent(new Menu(Constants.RECID_MENU_ROOTID));
 			}
 			menu.setParent(menuService.findByRecid(menu.getParent().getRecid()));
 		}

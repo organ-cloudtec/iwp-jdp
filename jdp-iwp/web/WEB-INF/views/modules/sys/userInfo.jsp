@@ -4,7 +4,6 @@
 <html>
 <head>
 	<title>后台管理系统</title>
-    <%@include file="/WEB-INF/views/include/head.jsp" %>
     <style type="text/css"> 
 		.controls{ 
 		     display:inline-block;

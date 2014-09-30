@@ -71,4 +71,44 @@ public class OrganService extends BaseService {
 		PageRequest pageRequest = pageUtils.buildPageRequest(pageNumber, pageSize, sortType);
 		return organDao.findAll(pageUtils.buildSpecification(searchParams),pageRequest);//spec,
 	}
+
+	/**
+	 * @Title: OrganService.findByRecid
+	 * @Author wangqi01 2014-9-29
+	 * @Description: TODO
+	 * @param recid
+	 * @return Organ
+	 * 
+	 */
+	public Organ findByRecid(String recid) {
+		return organDao.findByRecid(recid);
+	}
+
+	/**
+	 * @Title: OrganService.findByName
+	 * @Author wangqi01 2014-9-30
+	 * @Description: TODO
+	 * @param organname
+	 * @return Organ
+	 */
+	public Organ findByName(String organname) {
+		return organDao.findByName(organname);
+	}
+
+	/**
+	 * @Title: OrganService.save
+	 * @Author wangqi01 2014-9-30
+	 * @Description: TODO
+	 * @param organ
+	 * @return boolean
+	 * 
+	 */
+	public boolean save(Organ organ) {
+		try{
+			organDao.saveAndFlush(organ);
+		}catch(Exception e){
+			return false;
+		}
+		return true;
+	}
 }

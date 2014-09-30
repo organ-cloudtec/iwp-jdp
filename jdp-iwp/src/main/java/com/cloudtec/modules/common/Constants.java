@@ -15,7 +15,7 @@ package com.cloudtec.modules.common;
  * @date: 2014-9-22 下午4:00:30 <br/> 
  * 
  * @author wangqi01 
- * @version  
+ * @version
  * @since JDK 1.6 
  */
 
@@ -36,12 +36,12 @@ public final class Constants {
 	public static final String DEL_FLAG_AUDIT = "2";
 	
 	//菜单根节点ID
-	public static String RECID_MENU_ROOTID="ROOTID";
+	public static String RECID_MENU_ROOTID="TOP_MENU_ID";
 	//管理员ID
 	public static String RECID_USER_ADMINID = "ADMINID";
 	
 	//分页默认每页记录数
-	public  final static String DEFAULT_PAGE_SIZE = "10";
+	public  final static int DEFAULT_PAGE_SIZE = 10;
 	
 	
 	//密码加密，验证密码使用

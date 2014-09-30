@@ -12,6 +12,7 @@ package com.cloudtec.modules.sys.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.cloudtec.modules.sys.entity.Organ;
@@ -30,5 +31,25 @@ import com.cloudtec.modules.sys.entity.Organ;
  */
 @Repository("organDao")
 public interface OrganDao extends JpaRepository<Organ,String>,JpaSpecificationExecutor<Organ>{
+
+	/**
+	 * @Title: OrganDao.findByRecid
+	 * @Author wangqi01 2014-9-29
+	 * @Description: TODO
+	 * @param recid
+	 * @return Organ
+	 * 
+	 */
+	@Query("select o from Organ o where o.recid =?1")
+	Organ findByRecid(String recid);
+
+	/**
+	 * @Title: OrganDao.findByName
+	 * @Author wangqi01 2014-9-30
+	 * @Description: TODO
+	 * @param organname
+	 * @return Organ
+	 */
+	Organ findByName(String organname);
 
 }

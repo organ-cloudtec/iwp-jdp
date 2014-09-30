@@ -13,8 +13,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
 
 import com.cloudtec.common.persistence.IdEntity;
 import com.cloudtec.modules.common.Constants;
@@ -52,7 +50,6 @@ public class ArticleData extends IdEntity {
 	}
 
 
-	@NotBlank
 	public String getContent() {
 		return content;
 	}
@@ -61,7 +58,6 @@ public class ArticleData extends IdEntity {
 		this.content = content;
 	}
 
-	@Length(min=0, max=255)
 	public String getCopyfrom() {
 		return copyfrom;
 	}
@@ -70,7 +66,6 @@ public class ArticleData extends IdEntity {
 		this.copyfrom = copyfrom;
 	}
 
-	@Length(min=0, max=255)
 	public String getRelation() {
 		return relation;
 	}
@@ -79,7 +74,6 @@ public class ArticleData extends IdEntity {
 		this.relation = relation;
 	}
 
-	@Length(min=1, max=1)
 	public String getAllowComment() {
 		return allowComment;
 	}

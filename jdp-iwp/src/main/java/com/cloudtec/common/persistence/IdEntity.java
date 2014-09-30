@@ -57,5 +57,4 @@ public abstract class IdEntity  implements Serializable {
 	public void setDel_flag(String del_flag) {
 		this.del_flag = del_flag;
 	}
-	
 }
