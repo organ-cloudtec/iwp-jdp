@@ -14,10 +14,10 @@
 			$("#name").focus();
 			$("#inputForm").validate({
 				rules: {
-					name: {remote: "${ctx}/sys/role/checkRolename?oldrolename=" + encodeURIComponent('${role.name}')},
+					name: {remote: "${ctx}/sys/organ/checkorganname?oldrolename=" + encodeURIComponent('${organ.name}')},
 				},
 				messages: {
-					name: {remote: "角色名称已存在"},
+					name: {remote: "单位名称已存在"},
 				},
 				submitHandler: function(form){
 					loading('正在提交，请稍等...');
@@ -54,6 +54,7 @@
 		<div class="control-group">
 		  <label class="control-label" for="name">单位名称：</label>
 		  <div class="controls">
+		    <input id="oldorganname" name="oldorganname" type="hidden" value="${organ.name}"/>
 		  	<form:input path="name" htmlEscape="false" class="input-large required" maxlength="255" placeholder="单位名称"/>
 		  </div>
 		</div>

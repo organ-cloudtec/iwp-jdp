@@ -23,7 +23,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -144,10 +143,10 @@ public class OrganController extends BaseController {
 	@ResponseBody
 	@RequiresPermissions("sys:organ:edit")
 	@RequestMapping("checkorganname")
-	public String checkOrganName(String organname,String oldorganname){
-		if(organname != null && organname.equals(oldorganname)){
+	public String checkOrganName(String name,String oldorganname){
+		if(name != null && name.equals(oldorganname)){
 			return "true";
-		}else if(organname != null && organService.findByName(organname)==null){
+		}else if(name != null && organService.findByName(name)==null){
 			return "true";
 		}
 		return "false";
