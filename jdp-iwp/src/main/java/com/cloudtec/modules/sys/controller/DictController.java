@@ -81,6 +81,24 @@ public class DictController extends BaseController {
 	}
 	
 	@RequiresPermissions("sys:dict:edit")
+	@RequestMapping(value = "delete")
+	public String delete(Dict dict,Model model,RedirectAttributes redirectAttributes){
+		if(StringUtils.isBlank(dict.getRecid())){
+			addMessage(model, "删除基础数据项失败，基础数据项ID不可为空！");
+		}else{
+			if(dictService.delete(dict)){
+				addMessage(model, "删除基础数据项成功。");
+				//刪除dict緩存
+				CacheUtils.remove(DictUtils.CACHE_DICT_MAP);
+			}else{
+				addMessage(model, "删除基础数据项失败。");
+			}
+		}
+		return "redirect:"+Global.getAdminPath()+"/sys/dict?repage";
+	}
+	
+	
+	@RequiresPermissions("sys:dict:edit")
 	@RequestMapping(value="save")
 	public String save(Dict dict,Model model,RedirectAttributes redirectAttributes){
 		//后台判断是否可以保存,修改
@@ -95,7 +113,6 @@ public class DictController extends BaseController {
 		CacheUtils.remove(DictUtils.CACHE_DICT_MAP);
 		return "redirect:"+Global.getAdminPath()+"/sys/dict?repage";
 	}
-	
 	/**
 	 * 检查基础数据中对应分类的标签名 和数据值 是否已存在
 	 */

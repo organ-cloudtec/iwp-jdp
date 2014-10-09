@@ -80,4 +80,22 @@ public class DictService extends BaseService {
 	public void save(Dict dict) {
 		dictDao.saveAndFlush(dict);
 	}
+
+	/**
+	 * @Title: DictService.delete
+	 * @Author wangqi01 2014-10-9
+	 * @Description: TODO
+	 * @param dict void
+	 * 
+	 */
+	public boolean delete(Dict dict) {
+		try{
+			dictDao.delete(dict.getRecid());
+		}catch(Exception e){
+			logger.error(getCurrentUser().getUsername() + "删除基础数据失败，id:"+dict.getRecid()+"\n"+e.getMessage());
+			return false;
+		}
+		logger.info(getCurrentUser().getUsername() + "删除基础数据成功，id:"+dict.getRecid());
+		return true;
+	}
 }
