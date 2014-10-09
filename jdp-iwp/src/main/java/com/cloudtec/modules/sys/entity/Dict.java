@@ -5,14 +5,19 @@
  */
 package com.cloudtec.modules.sys.entity;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.cloudtec.common.persistence.BaseEntity;
+import com.cloudtec.common.utils.StringUtils;
+import com.cloudtec.modules.sys.utils.DictUtils;
 
 
 /**
@@ -81,6 +86,26 @@ public class Dict extends BaseEntity<Dict> {
 
 	public void setSort(Integer sort) {
 		this.sort = sort;
+	}
+
+	/**
+	 * @Title: Dict.isOk
+	 * @Author wangqi01 2014-10-8
+	 * @Description: TODO
+	 * @return boolean
+	 */
+	@Transient
+	public boolean isOk() {
+		if(StringUtils.isBlank(type)||StringUtils.isBlank(label)||StringUtils.isBlank(value)){
+			return false;
+		}
+		List<Dict> dicts = DictUtils.getDictList(type);
+		for(Dict dict : dicts){
+			if(dict.getLabel().equals(label) && dict.getValue().equals(value) && !dict.getRecid().equals(recid)){
+				return false;
+			}
+		}
+		return true;
 	}
 	
 }

@@ -112,6 +112,12 @@ public class OrganController extends BaseController {
 		}
 		 return "redirect:"+Global.getAdminPath()+"/sys/organ?repage";
 	}
+	/**
+	 * @Title: OrganController.imprtOrgans
+	 * @Author wangqi01 2014-10-8
+	 * @Description: TODO 未处理，暂时遗留
+	 *
+	 */
 	@RequestMapping(value="import")
 	public String imprtOrgans(MultipartFile file,RedirectAttributes redirectAttributes){
 		addMessage(redirectAttributes, "单位信息导入成功，共导入");
