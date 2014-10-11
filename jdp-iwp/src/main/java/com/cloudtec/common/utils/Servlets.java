@@ -133,6 +133,7 @@ public class Servlets {
 	 * 
 	 * 返回的结果的Parameter名已去除前缀.
 	 */
+	@SuppressWarnings("rawtypes")
 	public static Map<String, Object> getParametersStartingWith(ServletRequest request, String prefix) {
 		Validate.notNull(request, "Request must not be null");
 		Enumeration paramNames = request.getParameterNames();

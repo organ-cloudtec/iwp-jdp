@@ -15,6 +15,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+
 import com.cloudtec.common.persistence.BaseEntity;
 import com.cloudtec.common.utils.StringUtils;
 import com.cloudtec.modules.sys.utils.DictUtils;
@@ -96,13 +97,20 @@ public class Dict extends BaseEntity<Dict> {
 	 */
 	@Transient
 	public boolean isOk() {
+		//三个属性不可为空
 		if(StringUtils.isBlank(type)||StringUtils.isBlank(label)||StringUtils.isBlank(value)){
 			return false;
 		}
 		List<Dict> dicts = DictUtils.getDictList(type);
 		for(Dict dict : dicts){
-			if(dict.getLabel().equals(label) && dict.getValue().equals(value) && !dict.getRecid().equals(recid)){
-				return false;
+			//存在相同的label，和 value
+			if(dict.getLabel().equals(label) && dict.getValue().equals(value)){
+				if(StringUtils.isBlank(recid)){
+					return false;
+				//id相同，是修改枚举项本身。
+				}else if(dict.getRecid().equals(recid)){
+					return true;
+				}
 			}
 		}
 		return true;

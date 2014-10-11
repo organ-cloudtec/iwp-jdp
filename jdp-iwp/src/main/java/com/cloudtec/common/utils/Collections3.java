@@ -24,6 +24,7 @@ import org.apache.commons.lang3.StringUtils;
  * 
  * @author calvin
  */
+@SuppressWarnings({"unchecked","rawtypes"})
 public class Collections3 {
 
 	/**

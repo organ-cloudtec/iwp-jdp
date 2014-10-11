@@ -11,7 +11,6 @@
 package com.cloudtec.modules.cms.controller;
 
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;

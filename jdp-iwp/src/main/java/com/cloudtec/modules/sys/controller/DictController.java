@@ -119,9 +119,42 @@ public class DictController extends BaseController {
 	@ResponseBody
 	@RequestMapping("checklabelandvalue")
 	public String checkLableAndValue(Dict dict){
-		if(dict.isOk())
+		//三个属性不可为空
+		if(StringUtils.isBlank(dict.getType())||StringUtils.isBlank(dict.getLabel())||StringUtils.isBlank(dict.getValue())){
 			return "true";
-		else
-			return "false";
+		}
+		List<Dict> dicts = DictUtils.getDictList(dict.getType());
+		for(Dict dt : dicts){
+			//存在相同的label，和 value
+			if(dict.getLabel().equals(dt.getLabel()) && dict.getValue().equals(dt.getValue())){
+				if(StringUtils.isBlank(dict.getRecid())){
+					return "false";
+				//id相同，是修改枚举项本身。
+				}else if(dict.getRecid().equals(dt.getRecid())){
+					return "true";
+				}
+			}
+		}
+		return "true";
 	}
+	
+	@RequiresPermissions("sys:dict:edit")
+	@RequestMapping(value="updateSort")
+	public String updateSort(String[] ids,Integer[] sorts, RedirectAttributes redirectAttributes){
+		int count = 0;
+		for(int i=0;i<ids.length;i++){
+			//step1,根据Id获取枚举项
+			Dict dict = dictService.findByRecid(ids[i]);
+			//修改sort
+			if(sorts[i] != null && dict.getSort().intValue() != sorts[i].intValue()){
+				dict.setSort(sorts[i]);
+				//保存sort
+				dictService.save(dict);
+				count++;
+			}
+		}
+		addMessage(redirectAttributes, "成功修改"+count+"条枚举项排序属性！");
+		return "redirect:"+Global.getAdminPath()+"/sys/dict?repage";
+	}
+	
 }

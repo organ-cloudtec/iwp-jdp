@@ -9,9 +9,45 @@
 			$("#label").focus();
 			$("#inputForm").validate({
 				rules: {
-					type: {remote: "${ctx}/sys/dict/checklabelandvalue"},
-					label: {remote: "${ctx}/sys/dict/checklabelandvalue"},
-					value: {remote: "${ctx}/sys/dict/checklabelandvalue"}
+					type: {
+							required:true,
+							remote:{                                          //验证用户名是否存在
+					               type:"POST",
+					               url:"${ctx}/sys/dict/checklabelandvalue",             //servlet
+					               data:{
+					            	   type:function(){return $("#type").val();},
+					            	   label:function() {return $("#label").val();},
+					            	   value:function() {return $("#value").val();},
+					            	   recid:function() {return $("#recid").val();}
+					               } 
+					              } 
+						},
+					label: {
+						required:true,
+						remote:{                                          
+			               type:"POST",
+			               url:"${ctx}/sys/dict/checklabelandvalue",             
+			               data:{
+			            	   type:function(){return $("#type").val();},
+			            	   label:function() {return $("#label").val();},
+			            	   value:function() {return $("#value").val();},
+			            	   recid:function() {return $("#recid").val();}
+			               } 
+			              } 
+						},
+					value: {
+						required:true,
+						remote:{                                          
+			               type:"POST",
+			               url:"${ctx}/sys/dict/checklabelandvalue",            
+			               data:{
+			            	   type:function(){return $("#type").val();},
+			            	   label:function() {return $("#label").val();},
+			            	   value:function() {return $("#value").val();},
+			            	   recid:function() {return $("#recid").val();}
+			               } 
+			              } 
+						}
 				},
 				messages: {
 					type: {remote: "该类型标签名对应的数据值已存在"},
@@ -38,7 +74,7 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/sys/dict/">枚举项列表</a></li>
-		<li class="active"><a href="${ctx}/sys/dict/form?recid=${menu.recid}">枚举项<shiro:hasPermission name="sys:dict:edit">${not empty menu.recid?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sys:dict:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="${ctx}/sys/dict/form?recid=${dict.recid}">枚举项<shiro:hasPermission name="sys:dict:edit">${not empty menu.recid?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sys:dict:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="dict" action="${ctx}/sys/dict/save" method="post" class="form-horizontal">
 		<form:hidden path="recid"/>
