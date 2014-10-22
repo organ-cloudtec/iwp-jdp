@@ -103,10 +103,10 @@ public class OrganController extends BaseController {
 			return form(organ, model);
 		}
 		//验证单位代码
-		boolean isSave = organService.save(organ);
-		if(isSave){
+		try{
+			organService.save(organ);
 			addMessage(redirectAttributes, "保存单位"+organ.getName()+"成功！");
-		}else{
+		}catch(Exception e){
 			addMessage(model, "保存单位"+organ.getName()+"失败！");
 			return form(organ, model);
 		}

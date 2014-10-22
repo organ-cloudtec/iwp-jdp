@@ -86,11 +86,12 @@ public class DictController extends BaseController {
 		if(StringUtils.isBlank(dict.getRecid())){
 			addMessage(model, "删除基础数据项失败，基础数据项ID不可为空！");
 		}else{
-			if(dictService.delete(dict)){
+			try{
+				dictService.delete(dict);
 				addMessage(model, "删除基础数据项成功。");
 				//刪除dict緩存
 				CacheUtils.remove(DictUtils.CACHE_DICT_MAP);
-			}else{
+			}catch (Exception e) {
 				addMessage(model, "删除基础数据项失败。");
 			}
 		}

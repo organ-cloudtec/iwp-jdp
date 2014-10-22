@@ -13,6 +13,7 @@ package com.cloudtec.modules.sys.service;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -107,7 +108,8 @@ public class OrganService extends BaseService {
 		try{
 			organDao.saveAndFlush(organ);
 		}catch(Exception e){
-			return false;
+			logger.error("保存单位信息失败。");
+			throw new ServiceException(e.getMessage());
 		}
 		return true;
 	}

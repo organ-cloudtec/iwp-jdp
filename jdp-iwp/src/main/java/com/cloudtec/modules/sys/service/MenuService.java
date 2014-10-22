@@ -21,6 +21,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.cloudtec.common.service.BaseService;
+import com.cloudtec.common.service.ServiceException;
 import com.cloudtec.modules.sys.dao.MenuDao;
 import com.cloudtec.modules.sys.entity.Menu;
 import com.cloudtec.modules.sys.entity.Role;
@@ -104,7 +105,7 @@ public class MenuService  extends BaseService {
 			menuDao.delete(menu.getRecid());
 		}catch(Exception e){
 			logger.error("删除菜单失败，菜单ID :"+ menu.getRecid(), e);
-			return false;
+			throw new ServiceException(e.getMessage());
 		}
 		return true;
 	}

@@ -10,14 +10,16 @@
 
 package com.cloudtec.modules.cms.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+
 import com.cloudtec.common.service.BaseService;
 import com.cloudtec.modules.cms.dao.CategoryDao;
 import com.cloudtec.modules.cms.entity.Category;
-import com.cloudtec.modules.sys.utils.PageBuildUtils;
 
 /** 
  * @ClassName: CategoryService <br/> 
@@ -39,15 +41,15 @@ public class CategoryService extends BaseService {
 	 * @Title: CategoryService.findAll
 	 * @Author wangqi01 2014-9-23
 	 * @Description: TODO
-	 * @param category void
 	 */
-	public void findAll(Category category) {
+	public List<Category> findAll() {
 		/**
 		 * 根据当前用户，查询当前单位的分类。
 		 * 目前没有根据单位区分，后期增加单位Id字段。
 		 */
-		PageBuildUtils<Category> pageBuildUtils = new PageBuildUtils<Category>();
-		categoryDao.findAll(pageBuildUtils.buildSpecification(category));
+//		PageBuildUtils<Category> pageBuildUtils = new PageBuildUtils<Category>();
+//		categoryDao.findAll(pageBuildUtils.buildSpecification(category));
+		return categoryDao.findAll();
 	}
 
 	/**
@@ -60,5 +62,23 @@ public class CategoryService extends BaseService {
 	 */
 	public Category findByRecid(String recid) {
 		return categoryDao.findByRecid(recid);
+	}
+
+	/**
+	 * @Title: CategoryService.save
+	 * @Author wangqi01 2014-10-13
+	 * @Description: TODO
+	 * @param category
+	 * @return boolean
+	 * 
+	 */
+	public boolean save(Category category) {
+		try{
+			categoryDao.save(category);
+		}catch(Exception e){
+			logger.error(getCurrentUser().getUsername()+"保存栏目失败。",e);
+			return false;
+		}
+		return true;
 	}
 }

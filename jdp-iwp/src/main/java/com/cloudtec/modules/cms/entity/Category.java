@@ -16,7 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -43,8 +42,6 @@ public class Category extends IdEntity {
     public static final String DEFAULT_TEMPLATE = "frontList";
 
 	private static final long serialVersionUID = 1L;
-//	private Site site;		// 归属站点
-//	private Office office;	// 归属部门
 	private Category parent;// 父级菜单
 	private String parentIds;// 所有父级编号
 	private String module; 	// 栏目模型（article：文章；picture：图片；download：下载；link：链接；special：专题）
@@ -55,14 +52,7 @@ public class Category extends IdEntity {
 	private String description; 	// 描述，填写有助于搜索引擎优化
 	private String keywords; 	// 关键字，填写有助于搜索引擎优化
 	private Integer sort; 		// 排序（升序）
-	private String inMenu; 		// 是否在导航中显示（1：显示；0：不显示）
-	private String inList; 		// 是否在分类页中显示列表（1：显示；0：不显示）
-	private String showModes; 	// 展现方式（0:有子栏目显示栏目列表，无子栏目显示内容列表;1：首栏目内容列表；2：栏目第一条内容）
 	private String allowComment;// 是否允许评论
-	private String isAudit;	// 是否需要审核
-	private String customListView;		// 自定义列表视图
-	private String customContentView;	// 自定义内容视图
-    private String viewConfig;	// 视图参数
 	
 	private List<Category> childList = Lists.newArrayList(); 	// 拥有子分类列表
 
@@ -70,12 +60,8 @@ public class Category extends IdEntity {
 		super();
 		this.module = "article";
 		this.sort = 30;
-		this.inMenu = Constants.HIDE;
-		this.inList = Constants.SHOW;
-		this.showModes = "0";
 		this.allowComment = Constants.NO;
 		this.del_flag = Constants.DEL_FLAG_NORMAL;
-		this.isAudit = Constants.NO;
 	}
 
 	public Category(String recid){
@@ -86,7 +72,6 @@ public class Category extends IdEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="parent_id")
 	@NotFound(action = NotFoundAction.IGNORE)
-	@NotNull
 	public Category getParent() {
 		return parent;
 	}
@@ -160,7 +145,7 @@ public class Category extends IdEntity {
 		this.keywords = keywords;
 	}
 	
-	@NotNull
+	//@NotNull//@NotNull
 	public Integer getSort() {
 		return sort;
 	}
@@ -168,31 +153,6 @@ public class Category extends IdEntity {
 	public void setSort(Integer sort) {
 		this.sort = sort;
 	}
-
-	public String getInMenu() {
-		return inMenu;
-	}
-
-	public void setInMenu(String inMenu) {
-		this.inMenu = inMenu;
-	}
-
-	public String getInList() {
-		return inList;
-	}
-
-	public void setInList(String inList) {
-		this.inList = inList;
-	}
-
-	public String getShowModes() {
-		return showModes;
-	}
-
-	public void setShowModes(String showModes) {
-		this.showModes = showModes;
-	}
-	
 	public String getAllowComment() {
 		return allowComment;
 	}
@@ -201,37 +161,7 @@ public class Category extends IdEntity {
 		this.allowComment = allowComment;
 	}
 
-	public String getIsAudit() {
-		return isAudit;
-	}
 
-	public void setIsAudit(String isAudit) {
-		this.isAudit = isAudit;
-	}
-
-	public String getCustomListView() {
-		return customListView;
-	}
-
-	public void setCustomListView(String customListView) {
-		this.customListView = customListView;
-	}
-
-	public String getCustomContentView() {
-		return customContentView;
-	}
-
-	public void setCustomContentView(String customContentView) {
-		this.customContentView = customContentView;
-	}
-
-    public String getViewConfig() {
-        return viewConfig;
-    }
-
-    public void setViewConfig(String viewConfig) {
-        this.viewConfig = viewConfig;
-    }
 
 	@OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE},fetch=FetchType.LAZY,mappedBy="parent")
 	@Where(clause="del_flag='"+Constants.DEL_FLAG_NORMAL+"'")

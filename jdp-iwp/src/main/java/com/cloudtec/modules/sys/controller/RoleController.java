@@ -71,8 +71,12 @@ public class RoleController extends BaseController {
 			addMessage(model, "要删除角色的角色ID不能为空。");
 			return form(role,model);
 		}
-		boolean isSuccess = roleService.delete(role.getRecid());
-		addMessage(redirectAttributes, "删除角色"+(isSuccess?"成功":"失败"));
+		try{
+			boolean isSuccess = roleService.delete(role.getRecid());
+			addMessage(redirectAttributes, "删除角色"+(isSuccess?"成功":"失败"));
+		}catch (Exception e) {
+			addMessage(redirectAttributes, "删除角色失败");
+		}
 		return "redirect:"+Global.getAdminPath()+"/sys/role/?repage";
 	}
 	

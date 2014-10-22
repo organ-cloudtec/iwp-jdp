@@ -71,8 +71,6 @@ public class MenuController extends BaseController {
 			}
 			menu.setParent(menuService.findByRecid(menu.getParent().getRecid()));
 		}
-			
-		
 		model.addAttribute("menu", menu);
 		return "modules/sys/menuForm";
 	}
@@ -91,12 +89,13 @@ public class MenuController extends BaseController {
 			addMessage(model, "删除菜单失败，菜单ID不可为空!");
 			return "redirect:"+Global.getAdminPath()+"/sys/menu/?repage";
 		}
-		if(menuService.delete(menu)){
+		try{
+			menuService.delete(menu);
 			addMessage(redirectAttributes, "删除菜单信息成功。");
-		}else{
+			UserUtils.removeCache(UserUtils.CACHE_MENU_LIST);
+		}catch (Exception e) {
 			addMessage(redirectAttributes, "删除菜单失败。");
 		}
-		UserUtils.removeCache(UserUtils.CACHE_MENU_LIST);
 		return "redirect:"+Global.getAdminPath()+"/sys/menu/?repage";
 	}
 	/**

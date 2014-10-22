@@ -12,6 +12,7 @@ package com.cloudtec.modules.sys.service;
 
 import java.util.List;
 
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -93,9 +94,9 @@ public class DictService extends BaseService {
 			dictDao.delete(dict.getRecid());
 		}catch(Exception e){
 			logger.error(getCurrentUser().getUsername() + "删除基础数据失败，id:"+dict.getRecid()+"\n"+e.getMessage());
-			return false;
+			throw new ServiceException(e.getMessage());
 		}
-		logger.info(getCurrentUser().getUsername() + "删除基础数据成功，id:"+dict.getRecid());
+		logger.debug(getCurrentUser().getUsername() + "删除基础数据成功，id:"+dict.getRecid());
 		return true;
 	}
 }
