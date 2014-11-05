@@ -1,12 +1,14 @@
 package com.cloudtec.modules.sys.service;
 
 
-import java.util.Map;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
 
 import com.cloudtec.common.service.BaseService;
 import com.cloudtec.modules.sys.dao.UserDao;
@@ -32,20 +34,25 @@ public class UserService  extends BaseService {
 	 * @param user 
 	  * @Title: findUsers
 	  * @Author wangqi01 2014-8-12
-	  * @Description: TODO
-	  * @param page
-	  * @param user
-	  * @return    
+	  * @Description: TODO 分页显示
 	  * Page<User>
 	  * @throws
 	  */
-	public  Page<User> findUsers(Map<String, Object> searchParams, int pageNumber, int pageSize,
+	public  Page<User> findUsers(User user, int pageNumber, int pageSize,
 			String sortType) {
 		PageBuildUtils<User> pageUtils = new PageBuildUtils<User>();
 		PageRequest pageRequest = pageUtils.buildPageRequest(pageNumber, pageSize, sortType);
-		return userDao.findAll(pageUtils.buildSpecification(searchParams),pageRequest);//spec,
+		return userDao.findAll(pageUtils.buildSpecification(user),pageRequest);
 	}
-
+	/**
+	 * @Title: UserService.findAllUsers
+	 * @Author wangqi01 2014-11-5
+	 * @Description: TODO
+	 * @return List<User>
+	 */
+	public List<User> findAllUsers(){
+		return userDao.findAll();
+	}
 	/**
 	  * @Title: findByRecid
 	  * @Author wangqi01 2014-8-12

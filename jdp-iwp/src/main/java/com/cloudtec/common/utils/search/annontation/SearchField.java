@@ -8,7 +8,7 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
 
-package com.cloudtec.common.utils.annotation;
+package com.cloudtec.common.utils.search.annontation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -16,7 +16,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 
-import com.cloudtec.common.persistence.Operator;
+import com.cloudtec.common.utils.search.status.IsInnerType;
+import com.cloudtec.common.utils.search.status.Operator;
 
 /** 
  * 动态查询注解，简化，复用动态查询。
@@ -31,5 +32,12 @@ import com.cloudtec.common.persistence.Operator;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface SearchField {
 	
-	Operator operator() default Operator.EQ; 
+	Operator operator() default Operator.EQ;
+	
+	//字段名称【暂未使用】
+	String filedName() default "";
+	/**
+	 * 是否是类内部查询字段或方法
+	 */
+	IsInnerType fieldType() default IsInnerType.YES;
 }

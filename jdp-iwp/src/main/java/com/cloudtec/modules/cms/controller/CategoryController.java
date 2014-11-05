@@ -104,11 +104,9 @@ public class CategoryController extends BaseController {
 		return "redirect:"+Global.getAdminPath()+"/cms/category?repage";
 	}
 	/**
-	 * 
 	 * @Title: CategoryController.checkcategory
 	 * @Author wangqi01 2014-10-13
 	 * @Description: TODO 验证栏目是否可用，未实现。
-	 *
 	 */
 	@RequiresPermissions("sys:category:edit")
 	@RequestMapping(value="checkcategory")

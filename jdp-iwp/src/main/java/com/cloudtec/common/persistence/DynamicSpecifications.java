@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.cloudtec.common.utils.Collections3;
+import com.cloudtec.common.utils.search.SearchFilter;
 import com.google.common.collect.Lists;
 
 public class DynamicSpecifications {

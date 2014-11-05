@@ -12,6 +12,8 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 
 import com.cloudtec.common.utils.Identities;
+import com.cloudtec.common.utils.search.annontation.SearchField;
+import com.cloudtec.common.utils.search.status.Operator;
 
 @MappedSuperclass
 public abstract class IdEntity  implements Serializable {
@@ -33,6 +35,7 @@ public abstract class IdEntity  implements Serializable {
 		this.recid = Identities.uuid2();
 	}
 
+	@SearchField(operator=Operator.EQ)
 	@Id
 	public String getRecid() {
 		return recid;

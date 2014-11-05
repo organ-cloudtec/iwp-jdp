@@ -8,7 +8,7 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
 
-package com.cloudtec.common.persistence;
+package com.cloudtec.common.utils.search.status;
 /** 
  * @ClassName: Operator <br/> 
  * @Description: TODO  查询操作符枚举类<br/> 

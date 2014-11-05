@@ -23,6 +23,9 @@ import org.hibernate.annotations.DynamicUpdate;
 
 
 import com.cloudtec.common.persistence.BaseEntity;
+import com.cloudtec.common.utils.search.annontation.SearchField;
+import com.cloudtec.common.utils.search.status.IsInnerType;
+import com.cloudtec.common.utils.search.status.Operator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
@@ -40,6 +43,7 @@ public class User extends BaseEntity<User>{
 	
 	private String confirmNewPassword;
 	
+	@SearchField(operator = Operator.IN,fieldType = IsInnerType.NO)
 	@ManyToOne
 	@JoinColumn(name="ORG_RECID")
 	@Cascade(value = CascadeType.REFRESH)
@@ -59,11 +63,12 @@ public class User extends BaseEntity<User>{
 	public void setRoleList(List<Role> roleList) {
 		this.roleList = roleList;
 	}
-	
+	@SearchField(operator = Operator.LIKE)
 	@Column(name="USR_NAME",nullable=false)
 	public String getName() {
 		return name;
 	}
+	@SearchField(operator = Operator.LIKE)
 	@Column(name="USR_ID",nullable=false,unique=true)
 	public String getUsername() {
 		return username;
@@ -73,6 +78,7 @@ public class User extends BaseEntity<User>{
 	public String getPassword() {
 		return password;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}

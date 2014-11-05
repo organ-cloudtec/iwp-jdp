@@ -20,7 +20,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.cloudtec.common.persistence.DynamicSpecifications;
-import com.cloudtec.common.persistence.SearchFilter;
+import com.cloudtec.common.utils.search.SearchFilter;
 
 
 /** 
@@ -57,6 +57,7 @@ public class PageBuildUtils<T> {
 	}
 	/**
 	 * 创建动态查询条件组合.
+	 * 根据实体注解
 	 */
 	public Specification<T> buildSpecification(T entity) {
 		Map<String, SearchFilter> filters = SearchFilter.parse(entity);
@@ -66,7 +67,7 @@ public class PageBuildUtils<T> {
 	}
 	
 	/**
-	 * 创建分页请求.
+	 * 创建分页请求.sort 可以使用annotation处理，待处理【王琦 2014-11-5】 
 	 */
 	public PageRequest buildPageRequest(int pageNumber, int pagzSize, String sortType) {
 		Sort sort = null;

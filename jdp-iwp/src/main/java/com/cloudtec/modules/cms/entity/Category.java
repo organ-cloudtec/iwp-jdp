@@ -24,8 +24,8 @@ import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Where;
 
 import com.cloudtec.common.persistence.IdEntity;
-import com.cloudtec.common.persistence.Operator;
-import com.cloudtec.common.utils.annotation.SearchField;
+import com.cloudtec.common.utils.search.annontation.SearchField;
+import com.cloudtec.common.utils.search.status.Operator;
 import com.cloudtec.modules.common.Constants;
 import com.google.common.collect.Lists;
 
