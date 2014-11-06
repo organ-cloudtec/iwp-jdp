@@ -189,6 +189,21 @@ public class UserController extends BaseController{
 		model.addAttribute("user", user);
 		return "modules/sys/userInfo";
 	}
+	/**
+	 * @Title: UserController.toModifyPassword
+	 * @Author wangqi01 2014-11-6
+	 * @Description: TODO 跳转密码修改页面，【未实现】
+	 */
+	@RequestMapping(value = "tomodifyPW")
+	public String toModifyPassword(User user,Model model){
+		if(user.getRecid() == null){
+			user = UserUtils.getUser();
+		}else{
+			user = userService.findByRecid(user.getRecid());
+		}
+		model.addAttribute("user", user);
+		return "modules/sys/userPassWord";
+	}
 	//检查登陆名是否存在
 	@ResponseBody
 	@RequiresPermissions("sys:user:edit")
