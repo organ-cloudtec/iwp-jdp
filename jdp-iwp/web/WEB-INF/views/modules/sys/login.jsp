@@ -12,7 +12,7 @@
   		<div class="container">
   		<div class="col-lg-4"></div>
   		<div class="col-lg-4">
-		<form id="loginForm" action="${ctx}/a/login" method="post" >
+		<form id="loginForm" action="${ctx}/login" method="post" >
   			<div class="col-ms-4 form-group">
     			<label for="username" class="control-label">用户名</label>
     			<div>

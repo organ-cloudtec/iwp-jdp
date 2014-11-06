@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
-<%@include file="/WEB-INF/views/include/head.jsp" %>
 <html>
 <head>
 	<title>菜单管理</title>
@@ -8,47 +7,59 @@
 	<style type="text/css">.table td i{margin:0 2px;}</style>
 </head>
 <body>
+	<c:if test="${not empty message}">
+		<div id="message" class="alert alert-success"><button data-dismiss="alert" class="close">×</button>${message}</div>
+	</c:if>
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/sys/menu/">菜单列表</a></li>
-		<li><a href="${ctx}/sys/menu/form">菜单添加</a></li>
+		<shiro:hasPermission name="sys:menu:edit">
+			<li><a href="${ctx}/sys/menu/form">菜单添加</a></li>
+		</shiro:hasPermission>
 	</ul>
-	<form:form id="searchForm" modelAttribute="menu" action="${ctx}/sys/menu" method="post" class="breadcrumb form-search">
-		<div>
-			<label>菜单名称：</label><form:input path="name" htmlEscape="false" maxlength="50" class="input-small"/>
-		</div>
-		<div style="margin-top:8px;">
-			<label>简&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</label><form:input path="nameMng" htmlEscape="false" maxlength="50" class="input-small"/>
-			&nbsp;<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
-			&nbsp;<input id="btnExport" class="btn btn-primary" type="button" value="导出" />
-			&nbsp;<input id="btnImport" class="btn btn-primary" type="button" value="导入" />
-		</div>
-	</form:form>
-	<table id="contentTable" class="table table-striped table-bordered table-condensed">
-		<thead>
+	<form:form id="inputForm" method="post">
+		<table id="treeTable" class="table table-striped table-bordered table-condensed">
 			<tr>
-				<th>名称</th>
-				<th>简称</th>
-				<th>排序</th>
-				<th>可见</th>
-				<th>操作</th>
+				<th style="text-align:center;">名称</th>
+				<th style="text-align:center;">别名</th>
+				<th style="text-align:center;">链接</th>
+				<th style="text-align:center;">排序</th>
+				<th style="text-align:center;">可见</th>
+				<th style="text-align:center;">权限</th>
+				<th style="text-align:center;">操作</th>
 			</tr>
-		</thead>
-		<tbody>
-			<c:forEach items="${menus.content}" var="menu">
+			<c:forEach items="${menus}" var="menu">
 				<tr>
-					<td><a href="${ctx}/sys/menu/form?recid=${menu.recid}">${menu.name}</a></td>
+					<td style="${not empty menu.permissionFlag?'text-align:center':''}"><i class="icon-${not empty menu.icon?menu.icon:'hide'}"></i><a href="${ctx}/sys/menu/form?recid=${menu.recid}">${menu.name}</a></td>
 					<td>${menu.nameMng}</td>
-					<td>${menu.sort}</td>
-					<td>${menu.isShow eq '0'?'显示':'隐藏'}</td>
+					<td>${menu.url}</td>
+					<td style="text-align:center;">
+						<shiro:hasPermission name="sys:menu:edit">
+							<input type="hidden" name="ids" value="${menu.recid}"/>
+							<input name="sorts" type="text" value="${menu.sort}" style="width:50px;margin:0;padding:0;text-align:center;">
+						</shiro:hasPermission><shiro:lacksPermission name="sys:menu:edit">
+							${menu.sort}
+						</shiro:lacksPermission>
+					</td>
+					<td>${menu.isShow eq '0'?'隐藏':'显示'}</td>
+					<td>${menu.permissionFlag}</td>
 					<td>
-						<a href="${ctx}/sys/menu/form?recid=${menu.recid}">添加</a>
-						<a href="${ctx}/sys/menu/form?recid=${menu.recid}">修改</a>
-						<a href="${ctx}/sys/menu/delete?recid=${menu.recid}">删除</a>  
+						<shiro:hasPermission name="sys:menu:edit">
+							<a href="${ctx}/sys/menu/form?parent.recid=${menu.recid}">添加下级菜单</a>
+							<a href="${ctx}/sys/menu/form?recid=${menu.recid}">修改</a>
+							<a href="${ctx}/sys/menu/delete?recid=${menu.recid}">删除</a>
+						</shiro:hasPermission>
+						<shiro:lacksPermission name="sys:menu:view">
+							<a href="${ctx}/sys/menu/form?recid=${menu.recid}">查看</a>
+						</shiro:lacksPermission>
 					</td>
 				</tr>
 			</c:forEach>
-		</tbody>
-	</table>
-	<tags:pagination paginationSize="10" page="${menus}"></tags:pagination>
+		</table>
+		<shiro:hasPermission name="sys:menu:edit">
+			<div class="form-actions pagination-left">
+				<input id="btnSubmit" class="btn btn-primary" type="button" value="保存排序" onclick="updateSort();"/>
+			</div>
+		</shiro:hasPermission>
+	</form:form>
 </body>
 </html>

@@ -12,33 +12,33 @@
 	<div class="row">
 		<div class="col-md-12">
 		<nav class="navbar navbar-default " role="navigation">
-		  <div class="navbar-header">
-		    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-		      <span class="sr-only">Toggle navigation</span>
-		      <span class="icon-bar"></span>
-		      <span class="icon-bar"></span>
-		      <span class="icon-bar"></span>
-		    </button>
-		  </div>
-		  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		    <ul class="nav navbar-nav">
-		      <li><a href="${ctx}">首页</a></span></li>
-		      <li><a href="${ctx}/sys/">系统管理</a></li>
-		    </ul>
-		    
-		    <ul class="nav navbar-nav navbar-right">
-		      <li class="dropdown">
-		        <a href="#" class="dropdown-toggle" data-toggle="dropdown">您好，测试账号 <b class="caret"></b></a>
-		        <ul class="dropdown-menu">
-		          <li><a href="#">修改密码</a></li>
-		          <li><a href="#">修改基本信息</a></li>
-		          <li class="divider"></li>
-		          <li><a href="#">屏幕锁定</a></li>
-		          <li><a href="#">退出登录</a></li>
-		        </ul>
-		      </li>
-		    </ul>
-			</div>
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+  </div>
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+      <li><a href="${ctx}">首页</a></span></li>
+      <li><a href="${ctx}/sys/">系统管理</a></li>
+    </ul>
+    
+    <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">您好，测试账号 <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">修改密码</a></li>
+          <li><a href="#">修改基本信息</a></li>
+          <li class="divider"></li>
+          <li><a href="#">屏幕锁定</a></li>
+          <li><a href="#">退出登录</a></li>
+        </ul>
+      </li>
+    </ul>
+	</div>
 	</nav>
 		</div>
 		<div class="col-md-6">

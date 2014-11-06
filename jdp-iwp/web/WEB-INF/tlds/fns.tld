@@ -45,14 +45,14 @@
     <description>获取当前用户对象</description>
     <name>getUser</name>
     <function-class>com.cloudtec.modules.sys.utils.UserUtils</function-class>
-    <function-signature>com.thinkgem.jeesite.modules.sys.entity.User getUser()</function-signature>
+    <function-signature>com.cloudtec.modules.sys.entity.User getUser()</function-signature>
     <example>${fns:getUser()}</example>  
   </function>
   <function>
     <description>根据ID获得用户对象</description>
     <name>getUserById</name>
     <function-class>com.cloudtec.modules.sys.utils.UserUtils</function-class>
-    <function-signature>com.thinkgem.jeesite.modules.sys.entity.User getUserById(java.lang.String)</function-signature>
+    <function-signature>com.cloudtec.modules.sys.entity.User getUserById(java.lang.String)</function-signature>
     <example>${fns:getUserById(id)}</example>  
   </function>
   
@@ -92,7 +92,7 @@
   <function>
     <description>获取字典标签</description>
     <name>getDictLabel</name>
-    <function-class>com.thinkgem.jeesite.modules.sys.utils.DictUtils</function-class>
+    <function-class>com.cloudtec.modules.sys.utils.DictUtils</function-class>
     <function-signature>java.lang.String getDictLabel(java.lang.String, java.lang.String, java.lang.String)</function-signature>
     <example>${fns:getDictLabel(value, type, defaultValue)}</example>  
   </function>

@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
-<%@include file="/WEB-INF/views/include/head.jsp" %>
 <html>
 <head>
 	<title>菜单管理</title>
@@ -35,10 +34,8 @@
 		<form:hidden path="recid"/>
 		<div class="control-group">
 			<label class="control-label">上级菜单:</label>
-			<div class="controls">
                 <tags:treeselect id="menu" name="parent.recid" value="${menu.parent.recid}" labelName="parent.name" labelValue="${menu.parent.name}"
-					title="菜单" url="/sys/menu/treeData" extId="${menu.recid}" cssClass="required"/>
-			</div>
+					title="菜单" url="/sys/menu/treeData?extId=${menu.recid}"  cssClass="required" />
 		</div>
 		<div class="control-group">
 			<label class="control-label">名称:</label>
@@ -61,7 +58,7 @@
 		<div class="control-group">
 			<label class="control-label">链接:</label>
 			<div class="controls">
-				<form:input path="url" htmlEscape="false" maxlength="10"/>
+				<form:input path="url" htmlEscape="false" maxlength="50"/>
 			</div>
 		</div>
 			<div class="control-group">
@@ -94,6 +91,5 @@
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>
-	
 </body>
 </html>

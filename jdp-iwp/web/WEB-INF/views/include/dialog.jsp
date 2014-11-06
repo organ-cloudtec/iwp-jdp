@@ -1,4 +1,8 @@
-<!-- jBox -->
-<link rel="stylesheet" href="${ctx}/components/jquery-jbox/2.3/Skins/Default/jbox.css" text="text/css"/>
-<script src="${ctx}/components/jquery-jbox/2.3/i18n/jquery.jBox-zh-CN.js" type="text/javascript"></script>
-<script src="${ctx}/components/jquery-jbox/2.3/jquery.jBox-2.3.min.js" type="text/javascript"/></script>
+<!-- 使用 artDialog-->
+<script src="${ctxStatic}/components/artDialog-v6/dialog-min.js" type="text/javascript"></script>
+<!----> 
+<script src="${ctxStatic}/components/artDialog-v6/dialog-plus-min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="${ctxStatic}/components/artDialog-v6/css/ui-dialog.css">
+<!--  
+<script src="${ctxStatic}/components/artDialog-v6/sea.js"></script>
+ -->

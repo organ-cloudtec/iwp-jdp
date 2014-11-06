@@ -19,70 +19,80 @@
 <%@ attribute name="disabled" type="java.lang.String" required="false" description="是否限制选择，如果限制，设置为disabled"%>
 <%@ attribute name="nodesLevel" type="java.lang.String" required="false" description="菜单展开层数"%>
 <%@ attribute name="nameLevel" type="java.lang.String" required="false" description="返回名称关联级别"%>
-<div class="input-append">
+<div class="controls">
 	<input id="${id}Id" name="${name}" class="${cssClass}" type="hidden" value="${value}"${disabled eq 'true' ? ' disabled=\'disabled\'' : ''}/>
-	<input id="${id}Name" name="${labelName}" readonly="readonly" type="text" value="${labelValue}" maxlength="50"${disabled eq "true"? " disabled=\"disabled\"":""}"
-		class="${cssClass}" style="${cssStyle}"/><a id="${id}Button" href="javascript:" class="btn${disabled eq 'true' ? ' disabled' : ''}"><i class="icon-search"></i></a>&nbsp;&nbsp;
+	<input id="${id}Name" name="${labelName}" readonly="readonly" type="text" value="${labelValue}" maxlength="100"${disabled eq "true"? " disabled=\"disabled\"":""}"
+		class="${cssClass}" style="${cssStyle}"/><a id="${id}Button" href="javascript:" onclick="showTree()" class="btn${disabled eq 'true' ? ' disabled' : ''}"><i class="icon-search"></i></a>&nbsp;&nbsp;
 </div>
 <script type="text/javascript">
-	$("#${id}Button").click(function(){
-		// 是否限制选择，如果限制，设置为disabled
-		if ($("#${id}Id").attr("disabled")){
+ 	function showTree(){
+	 if ($("#${id}Id").attr("disabled")){
 			return true;
 		}
-        var nameLevel = ${nameLevel eq null ? "1" : nameLevel};
-		// 正常打开	
-		top.$.jBox.open("iframe:${ctx}/tag/treeselect?url="+encodeURIComponent("${url}")+"&module=${module}&checked=${checked}&extId=${extId}&nodesLevel=${nodesLevel}&selectIds="+$("#${id}Id").val(), "选择${title}", 300, 420, {
-			buttons:{"确定":"ok", ${allowClear?"\"清除\":\"clear\", ":""}"关闭":true}, submit:function(v, h, f){
-				if (v=="ok"){
-					var tree = h.find("iframe")[0].contentWindow.tree;//h.find("iframe").contents();
-					var ids = [], names = [], nodes = [];
-					if ("${checked}" == "true"){
-						nodes = tree.getCheckedNodes(true);
-					}else{
-						nodes = tree.getSelectedNodes();
+     var nameLevel = ${nameLevel eq null ? "1" : nameLevel};
+		top.dialog({
+			url: "${ctx}/tag/treeselect?url="+encodeURIComponent("${url}")+"&module=${module}&checked=${checked}&extId=${extId}&nodesLevel=${nodesLevel}&selectIds="+$("#${id}Id").val(),
+			title: '选择${title}',
+			width: 300,
+			height: 420,
+			//data: $('#input').val(), // 给 iframe 的数据
+			ok: function () {
+		    	var tree = this.iframeNode.contentWindow.tree;
+		    	var ids = [], names = [], nodes = [];
+				if ("${checked}" == "true"){
+					nodes = tree.getCheckedNodes(true);
+				}else{
+					nodes = tree.getSelectedNodes();
+				}
+				for(var i=0; i<nodes.length; i++) {
+					if ("${checked}" == "true" && nodes[i].isParent){
+						continue; // 如果为复选框选择，则过滤掉父节点
 					}
-					for(var i=0; i<nodes.length; i++) {//<c:if test="${checked}">
-						if (nodes[i].isParent){
-							continue; // 如果为复选框选择，则过滤掉父节点
-						}//</c:if><c:if test="${notAllowSelectRoot}">
-						if (nodes[i].level == 0){
-							top.$.jBox.tip("不能选择根节点（"+nodes[i].name+"）请重新选择。");
-							return false;
-						}//</c:if><c:if test="${notAllowSelectParent}">
-						if (nodes[i].isParent){
-							top.$.jBox.tip("不能选择父节点（"+nodes[i].name+"）请重新选择。");
-							return false;
-						}//</c:if><c:if test="${not empty module && selectScopeModule}">
-						if (nodes[i].module == ""){
-							top.$.jBox.tip("不能选择公共模型（"+nodes[i].name+"）请重新选择。");
-							return false;
-						}else if (nodes[i].module != "${module}"){
-							top.$.jBox.tip("不能选择当前栏目以外的栏目模型，请重新选择。");
-							return false;
-						}//</c:if>
-						ids.push(nodes[i].id);
-                        var t_node = nodes[i];
-                        var t_name = "";
-                        var name_l = 0;
-                        do{
-                            name_l++;
-                            t_name = t_node.name + " " + t_name;
-                            t_node = t_node.getParentNode();
-                        }while(name_l < nameLevel);
-						names.push(t_name);//<c:if test="${!checked}">
-						break; // 如果为非复选框选择，则返回第一个选择  </c:if>
+					if ("${notAllowSelectRoot}" =="true" && nodes[i].level == 0){
+						dialog({content:"不能选择根节点（"+nodes[i].name+"）请重新选择。"}).show();
+						return false;
 					}
-					$("#${id}Id").val(ids);
-					$("#${id}Name").val(names);
-				}//<c:if test="${allowClear}">
-				else if (v=="clear"){
-					$("#${id}Id").val("");
-					$("#${id}Name").val("");
-                }//</c:if>
-			}, loaded:function(h){
-				$(".jbox-content", top.document).css("overflow-y","hidden");
-			}
-		});
-	});
+					if ( "${notAllowSelectParent}" == "true" && nodes[i].isParent){
+						dialog({content:"不能选择父节点（"+nodes[i].name+"）请重新选择。"}).show();
+						return false;
+					}
+					//${not empty module && selectScopeModule} && 
+					if (nodes[i].module == ""){
+						dialog({content:"不能选择公共模型（"+nodes[i].name+"）请重新选择。"}).show();
+						return false;
+					}else if ("${module}" !="" && nodes[i].module != "${module}"){
+						dialog({content:"不能选择当前栏目以外的栏目模型，请重新选择。"}).show();
+						return false;
+					}
+					ids.push(nodes[i].id);
+                 var t_node = nodes[i];
+                 var t_name = "";
+                 var name_l = 0;
+                 do{
+                     name_l++;
+                     t_name = t_node.name + " " + t_name;
+                     t_node = t_node.getParentNode();
+                 }while(name_l < nameLevel);
+					names.push(t_name);
+					if("${checked}" != "true")
+						break; // 如果为非复选框选择，则返回第一个选择  
+				}
+				$("#${id}Id").val(ids);
+				$("#${id}Name").val(names);
+		    },
+			cancel:function(){},
+			okValue: '确定',
+			cancelValue: '取消',
+			/* onclose: function () {
+				that.close().remove();	
+			}, */
+			/* oniframeload: function () {
+			} */
+		}).showModal();
+		//return false;
+ 	};
+
+	/* $("#${id}Button").click(function (){
+	}); */
+
 </script>

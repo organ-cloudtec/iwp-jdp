@@ -17,8 +17,8 @@
 
     <cache name="org.apache.shiro.realm.text.PropertiesRealm-0-accounts"
            maxElementsInMemory="100" eternal="true" overflowToDisk="true"/>
-    
+    <!--  使用页面缓存需要增加 ehcache-web.jar包
     <cache name="SimplePageCachingFilter" maxElementsInMemory="100" eternal="false" overflowToDisk="true"
     	timeToIdleSeconds="120" timeToLiveSeconds="120" memoryStoreEvictionPolicy="LFU"/>
-    	
+     -->
 </ehcache>

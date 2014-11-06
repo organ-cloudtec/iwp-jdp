@@ -7,21 +7,24 @@
 <input id="${id}" name="${name}" type="hidden" value="${value}"/><a id="${id}Button" href="javascript:" class="btn">选择</a>&nbsp;&nbsp;
 <script type="text/javascript">
 	$("#${id}Button").click(function(){
-		top.$.jBox.open("iframe:${ctx}/tag/iconselect?value="+$("#${id}").val(), "选择图标", 700, $(top.document).height()-180, {
-            buttons:{"确定":"ok", "清除":"clear", "关闭":true}, submit:function(v, h, f){
-                if (v=="ok"){
-                	var icon = h.find("iframe")[0].contentWindow.$("#icon").val();
-                	$("#${id}Icon").attr("class", "icon-"+icon);
-	                $("#${id}IconLabel").text(icon);
-	                $("#${id}").val(icon);
-                }else if (v=="clear"){
-	                $("#${id}Icon").attr("class", "icon- hide");
-	                $("#${id}IconLabel").text("无");
-	                $("#${id}").val("");
-                }
-            }, loaded:function(h){
-                $(".jbox-content", top.document).css("overflow-y","hidden");
-            }
-        });
+		top.dialog({
+			url: "${ctx}/tag/iconselect?value="+$("#${id}").val(),
+			title: "选择图片",
+			width: 700,
+			hight: $(top.document).height()-180,
+			ok:function(){
+				var icon = this.iframeNode.contentWindow.icon.value;
+				$("#${id}Icon").attr("class", "icon-"+icon);
+                $("#${id}IconLabel").text(icon);
+                $("#${id}").val(icon);
+			},
+			okValue: '确定',
+			cancel:function(){
+				 $("#${id}Icon").attr("class", "icon-hide");
+	             $("#${id}IconLabel").text("无");
+	             $("#${id}").val("");
+			},
+			cancelValue: '清除'
+		}).showModal();
 	});
 </script>
