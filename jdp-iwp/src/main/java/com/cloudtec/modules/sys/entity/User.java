@@ -23,6 +23,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 
 import com.cloudtec.common.persistence.BaseEntity;
+import com.cloudtec.common.utils.excel.annontation.ExcelField;
 import com.cloudtec.common.utils.search.annontation.SearchField;
 import com.cloudtec.common.utils.search.status.IsInnerType;
 import com.cloudtec.common.utils.search.status.Operator;
@@ -63,6 +64,7 @@ public class User extends BaseEntity<User>{
 	public void setRoleList(List<Role> roleList) {
 		this.roleList = roleList;
 	}
+	@ExcelField(title="用户名",align=3)
 	@SearchField(operator = Operator.LIKE)
 	@Column(name="USR_NAME",nullable=false)
 	public String getName() {
