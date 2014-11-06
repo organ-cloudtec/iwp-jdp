@@ -22,6 +22,21 @@
 			$("#btnImport").click(function(){
 				$("#importBox").removeClass("hide");
 			});
+			$("#btnExport").click(function(){
+				var d = dialog({
+				    title: '系统提示',
+				    content: '确认要导出用户数据吗？',
+				    okValue: '确定',
+				    ok: function () {
+				    	$("#searchForm").attr("action","${ctx}/sys/user/export");
+						$("#searchForm").submit();
+						$("#searchForm").attr("action","${ctx}/sys/user/");
+				    },
+				    cancelValue: '取消',
+				    cancel: function () {}
+				});
+				d.show();
+			});
 		});
 	</script>
 </head>

@@ -31,13 +31,6 @@ public class SearchFilter {
 	}
 
 	/**
-	 * 创建一个新的实例 SearchFilter. 
-	 * 
-	 */
-	public SearchFilter() {
-	}
-
-	/**
 	 * searchParams中key的格式为OPERATOR_FIELDNAME
 	 */
 	public static Map<String, SearchFilter> parse(Map<String, Object> searchParams) {
@@ -144,8 +137,11 @@ public class SearchFilter {
 			if(StringUtils.isBlank(filedName)){
 				filedName = defaultfieldName;
 			}
-			SearchFilter filter = new SearchFilter(prefixKey+filedName, ef.operator(),val);
-			filters.put(prefixKey+filedName+"_"+ef.operator(), filter);
+			if(StringUtils.isNotBlank(prefixKey)){
+				filedName = prefixKey+filedName;
+			}
+			SearchFilter filter = new SearchFilter(filedName, ef.operator(),val);
+			filters.put(filedName+"_"+ef.operator(), filter);
 		}
 	}
 }

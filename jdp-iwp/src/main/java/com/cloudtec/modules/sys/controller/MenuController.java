@@ -17,6 +17,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -98,6 +99,28 @@ public class MenuController extends BaseController {
 		}
 		return "redirect:"+Global.getAdminPath()+"/sys/menu/?repage";
 	}
+	
+	@RequiresPermissions("sys:menu:edit")
+	@RequestMapping(value="updateSort")
+	public String updateSort(String[] ids,Integer[] sorts, RedirectAttributes redirectAttributes){
+		int count = 0;
+		for(int i=0;i<ids.length;i++){
+			//step1,根据Id获取枚举项
+			Menu menu = menuService.findByRecid(ids[i]);
+			//修改sort
+			if(sorts[i] != null && menu.getSort().intValue() != sorts[i].intValue()){
+				menu.setSort(sorts[i]);
+				//保存sort
+				menuService.save(menu);
+				count++;
+			}
+		}
+		addMessage(redirectAttributes, "成功修改"+count+"条菜单排序属性！");
+		return "redirect:"+Global.getAdminPath()+"/sys/menu?repage";
+	}
+	
+	
+	
 	/**
 	 * 功能已完成,获取右侧菜单
 	 * @Title: MenuController.tree
@@ -120,7 +143,6 @@ public class MenuController extends BaseController {
 	 * @param extId
 	 * @param response
 	 * @return List<Map<String,Object>>
-	 *
 	 */
 	@RequiresUser
 	@ResponseBody

@@ -5,6 +5,24 @@
 	<title>菜单管理</title>
 	<meta name="decorator" content="default"/>
 	<style type="text/css">.table td i{margin:0 2px;}</style>
+	<script type="text/javascript">
+		function updateSort(){
+			var d = dialog({
+			    title: '系统提示',
+			    content: '确认要保存修改菜单的排序？',
+			    okValue: '确定',
+			    ok: function () {
+					$("#inputForm").submit();
+			    },
+			    cancelValue: '取消',
+			    cancel: function () {}
+			});
+			d.show();
+		};
+		$(document).ready(function(){
+			
+		});
+	</script>
 </head>
 <body>
 	<c:if test="${not empty message}">
@@ -16,7 +34,7 @@
 			<li><a href="${ctx}/sys/menu/form">菜单添加</a></li>
 		</shiro:hasPermission>
 	</ul>
-	<form:form id="inputForm" method="post">
+	<form:form id="inputForm" method="post" action="${ctx }/sys/menu/updateSort">
 		<table id="treeTable" class="table table-striped table-bordered table-condensed">
 			<tr>
 				<th style="text-align:center;">名称</th>

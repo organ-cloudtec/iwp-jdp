@@ -44,6 +44,7 @@ public class User extends BaseEntity<User>{
 	
 	private String confirmNewPassword;
 	
+	@ExcelField(title="单位",align=3)
 	@SearchField(operator = Operator.IN,fieldType = IsInnerType.NO)
 	@ManyToOne
 	@JoinColumn(name="ORG_RECID")
