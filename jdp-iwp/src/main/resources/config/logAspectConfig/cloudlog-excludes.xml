@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <poplog-excludes>
 	<!--不需要记录日志的Controllers-->
-	<exclude-uris>test.htm,review.htm,slist.htm,rules.htm,render.htm,genHtmlPage.htm,sortBy.htm</exclude-uris>	
+	<exclude-uris>test,review</exclude-uris>	
 	
 	<!--
 		不需要记录到日志的实体属性;
@@ -10,14 +10,14 @@
 		(2)该实体作为Controller方法的参数时,在控制器方法执行完后,实体对应属性会被设置为null;
 		(3)如果某参数实体在控制器之后会继续使用,勿配置,否则属性被置为null后继取不到值;
 		(4)暂不支持嵌套属性,所配置的属性必须为参数的直接属性;
-	-->
+	
 	<exclude-entities>
 		<exclude-entity>
-			<class-name>com.lefeng.pop.decorate.entities.ShopModule</class-name>
-			<property-names>params</property-names>
+			<class-name></class-name>
+			<property-names></property-names>
 		</exclude-entity>
 	</exclude-entities>	
-	
+	-->
 	<!--
 		不需要记录到日志的类;
 		说明:

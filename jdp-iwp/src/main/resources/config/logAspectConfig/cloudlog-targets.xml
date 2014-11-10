@@ -1,43 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <business-targets>
 	<business-target>
-		<class-name>com.lefeng.pop.decorate.controllers.DecorationModuleController</class-name>
+		<class-name>com.cloudtec.modules.sys.controller.UserController</class-name>
 		<methods>
 			<method>
-				<method-name>findModuleConstraint</method-name>
-				<method-args>HttpServletRequest,HttpServletResponse,Long,String,String</method-args>
-				<method-desc>获取模块约束</method-desc>
-				<module-name>decorate</module-name>
-			</method>
-			<method>
-				<method-name>addModule</method-name>
-				<method-args>null</method-args>
-				<method-desc>创建模块</method-desc>
-				<module-name>decorate</module-name>
-			</method>
-			<method>
-				<method-name>editModule</method-name>
-				<method-args>null</method-args>
-				<method-desc>编辑模块</method-desc>
-				<module-name>decorate</module-name>
-			</method>
-			<method>
-				<method-name>moveModule</method-name>
-				<method-args>null</method-args>
-				<method-desc>移动模块</method-desc>
-				<module-name>decorate</module-name>
-			</method>
-			<method>
-				<method-name>deleteModule</method-name>
-				<method-args>null</method-args>
-				<method-desc>删除模块</method-desc>
-				<module-name>decorate</module-name>
-			</method>
-			<method>
-				<method-name>updateModule</method-name>
-				<method-args>null</method-args>
-				<method-desc>更新模块</method-desc>
-				<module-name>decorate</module-name>
+				<method-name>list</method-name>
+				<method-args>HttpServletRequest,HttpServletResponse,Model,User</method-args>
+				<method-desc>获取用户列表</method-desc>
+				<module-name>userManage</module-name>
 			</method>
 		</methods>
 	</business-target>
