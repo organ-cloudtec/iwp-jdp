@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<poplog-excludes>
+	<!--不需要记录日志的Controllers-->
+	<exclude-uris>test.htm,review.htm,slist.htm,rules.htm,render.htm,genHtmlPage.htm,sortBy.htm</exclude-uris>	
+	
+	<!--
+		不需要记录到日志的实体属性;
+		说明:
+		(1)主要为防止将大片段html记录到MongoDB,如：店铺装修中的自定义内容模块;
+		(2)该实体作为Controller方法的参数时,在控制器方法执行完后,实体对应属性会被设置为null;
+		(3)如果某参数实体在控制器之后会继续使用,勿配置,否则属性被置为null后继取不到值;
+		(4)暂不支持嵌套属性,所配置的属性必须为参数的直接属性;
+	-->
+	<exclude-entities>
+		<exclude-entity>
+			<class-name>com.lefeng.pop.decorate.entities.ShopModule</class-name>
+			<property-names>params</property-names>
+		</exclude-entity>
+	</exclude-entities>	
+	
+	<!--
+		不需要记录到日志的类;
+		说明:
+		(1)有些类不需要记录,如: 上传文件时的MultipartFile等;
+	-->
+	<exclude-classes>
+		<class-name>org.springframework.web.multipart.MultipartFile</class-name>
+		<class-name>org.springframework.web.multipart.commons.CommonsMultipartFile</class-name>
+	</exclude-classes>		
+</poplog-excludes>

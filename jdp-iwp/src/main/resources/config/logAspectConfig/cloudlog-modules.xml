@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<business-modules>
+	<business-module>
+		<module-name>vendorInfo</module-name>
+		<module-desc>商家信息</module-desc>
+	</business-module>
+	<business-module>
+		<module-name>shopDirectory</module-name>
+		<module-desc>店内分类</module-desc>
+	</business-module>	
+</business-modules>
