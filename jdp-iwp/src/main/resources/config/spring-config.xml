@@ -25,6 +25,9 @@
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 		<context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
 	</context:component-scan>
+	<!-- 日志切面 
+		<aop:aspectj-autoproxy />
+	-->
 	<!-- 属性文件位置 -->
 	<context:property-placeholder location="classpath*:config/jdbc.properties" 
 	ignore-unresolvable="true" />
@@ -70,7 +73,7 @@
         </property>
     </bean>
     
-    	<!-- 配置声明式事务 -->
+    <!-- 配置声明式事务 -->
 	<aop:config>
 		<aop:pointcut id="baseServiceMethods"
 			expression="execution(* com.cloudtec..service..*.*(..))" />
@@ -119,9 +122,8 @@
     
     
     <!-- 初始化数据表结构 与默认数据-->
-    <!-- 
-		<jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
+		<!--<jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
 			<jdbc:script location="classpath:sql/h2/schema.sql" />
-			<jdbc:script location="classpath:sql/data/import-data.sql" encoding="UTF-8"/>
+			<jdbc:script location="classpath:sql/data/import-data.sql" encoding="utf-8"/>
 		</jdbc:initialize-database> -->
 </beans>

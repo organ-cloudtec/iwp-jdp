@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<business-targets>
+	<business-target>
+		<class-name>com.cloudtec.modules.sys.controller.UserController</class-name>
+		<methods>
+			<method>
+				<method-name>list</method-name>
+				<method-args>HttpServletRequest,HttpServletResponse,Model,User</method-args>
+				<method-desc>获取用户列表</method-desc>
+				<module-name>userManage</module-name>
+			</method>
+		</methods>
+	</business-target>
+</business-targets>

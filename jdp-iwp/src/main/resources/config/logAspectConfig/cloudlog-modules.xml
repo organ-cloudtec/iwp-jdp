@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<business-modules>
+	<business-module>
+		<module-name>userManage</module-name>
+		<module-desc>用户管理</module-desc>
+	</business-module>
+	<business-module>
+		<module-name>roleManage</module-name>
+		<module-desc>角色管理</module-desc>
+	</business-module>	
+</business-modules>
