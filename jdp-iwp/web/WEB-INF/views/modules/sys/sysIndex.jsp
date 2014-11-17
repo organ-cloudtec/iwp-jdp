@@ -62,7 +62,6 @@
 			<div id="content" class="row-fluid">
 				<div id="menuFrame" class="sidebar col-md-2 nav" role="complementary">
 				</div>
-				<div id="openClose" class="close">&nbsp;</div> 
 				<div id="mainDiv" class="col-md-10 main panel" role="main"> <!-- id="mainFrame" -->
 					<div style="color: #000000">
 						<iframe id="mainFrame" name="mainFrame" src="" style="overflow:visible;"
