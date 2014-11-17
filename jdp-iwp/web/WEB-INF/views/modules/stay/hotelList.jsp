@@ -37,7 +37,7 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-sm-1 control-label" for="address">酒店地址：</label>
+			<label class="col-sm-2 control-label" for="address">酒店地址：</label>
 			<div class="col-sm-4">
 				<form:input path="address" htmlEscape="false" maxlength="200" class="form-control" placeholder="酒店地址"/>
 			&nbsp;

@@ -44,7 +44,7 @@
 				<form:input path="author" htmlEscape="false" maxlength="200" class="form-control" placeholder="创建人"/>
 			&nbsp;
 			</div>
-			<div class="col-sm-1">
+			<div class="col-sm-4">
 			<form:button id="btnSubmit" class="btn btn-primary" type="submit" >查询</form:button>&nbsp;
 				<shiro:hasPermission name="warnInfo:warn:edit">
 					<a class="btn btn-primary"  href="${ctx}/warnInfo/warn/form" >预警信息添加</a>
