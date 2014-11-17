@@ -42,7 +42,7 @@ public interface MenuDao extends JpaRepository<Menu, String>{
 	 * 根据用户获取对应的菜单信息
 	 */
 	@Query("select distinct m from Menu m, Role r, User u where m in elements (r.menuList) and r in elements (u.roleList)" +
-			" and u.recid=:recid order by m.sort")
+			" and u.recid=?1 order by m.sort")
 	List<Menu> findByUserRecid(String recid);
 
 	/**

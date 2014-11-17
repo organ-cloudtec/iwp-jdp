@@ -12,6 +12,8 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import com.cloudtec.common.persistence.BaseEntity;
 import com.cloudtec.common.utils.StringUtils;
+import com.cloudtec.common.utils.search.annontation.SearchField;
+import com.cloudtec.common.utils.search.status.Operator;
 import com.cloudtec.modules.sys.entity.Dict;
 import com.cloudtec.modules.sys.utils.DictUtils;
 import com.google.common.collect.Lists;
@@ -37,6 +39,7 @@ public class Warn extends BaseEntity<Warn>{
 	public Date getCreateAt() {
 		return createAt;
 	}
+	@SearchField(operator = Operator.LIKE)
 	public String getAuthor() {
 		return author;
 	}
@@ -68,6 +71,7 @@ public class Warn extends BaseEntity<Warn>{
 	public void setIssueClientDicts(List<Dict> issueClientDicts) {
 		this.issueClientDicts = issueClientDicts;
 	}
+	@SearchField(operator = Operator.LIKE)
 	public String getTitle() {
 		return title;
 	}

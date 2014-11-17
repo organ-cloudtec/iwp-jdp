@@ -47,7 +47,7 @@
 			</tr>
 			<c:forEach items="${menus}" var="menu">
 				<tr>
-					<td style="${not empty menu.permissionFlag?'text-align:center':''}"><i class="icon-${not empty menu.icon?menu.icon:'hide'}"></i><a href="${ctx}/sys/menu/form?recid=${menu.recid}">${menu.name}</a></td>
+					<td style="${not empty menu.url?'text-align:center':''}"><i class="icon-${not empty menu.icon?menu.icon:'hide'}"></i><a href="${ctx}/sys/menu/form?recid=${menu.recid}">${menu.name}</a></td>
 					<td>${menu.nameMng}</td>
 					<td>${menu.url}</td>
 					<td style="text-align:center;">

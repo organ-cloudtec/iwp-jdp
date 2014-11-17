@@ -7,6 +7,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 	       var ue = UE.getEditor('editor');
+	       ue.setContent(${warn.content});
 			$("#name").focus();
 			$("#inputForm").validate({
 				submitHandler: function(form){
@@ -58,7 +59,10 @@
 	</div>
     <div class="form-group">
     	<label class="col-sm-2 control-label" for="content">发布内容:</label>
-    	<div class ="col-sm-10 edui-default" id="editor"  style="width:880px; height:350px" name="content">
+    	 <script id="container" name="content" type="text/plain">
+        这里写你的初始化内容
+    </script>
+    	<div class ="col-sm-10 edui-default" id="editor" style="width:880px; height:350px" name="content">
     	</div>
      </div>
 	<div class="form-group">

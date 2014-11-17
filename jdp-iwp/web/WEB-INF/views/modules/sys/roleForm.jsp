@@ -60,7 +60,7 @@
 		<div class="control-group">
 			<label class="control-label" for="menuIds">权限：</label>
                <tags:treeselect id="menuIds" name="menuIds" value="${role.menuIds}" labelName="${role.menuNames}" labelValue="${role.menuNames}"
-				title="菜单" url="/sys/menu/treeData" cssClass="required" checked="true"/>
+				title="菜单" url="/sys/menu/treeData" cssClass="required" checked="true" checkedfarthercheck="true"/>
 		</div>
 		
 		<div class="form-actions" style="margin-top:8px;">

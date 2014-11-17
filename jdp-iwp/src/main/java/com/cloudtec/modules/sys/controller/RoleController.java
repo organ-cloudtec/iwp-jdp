@@ -88,7 +88,7 @@ public class RoleController extends BaseController {
 			return form(role, model);
 		}
 		roleService.save(role);
-		addMessage(redirectAttributes, "新增角色 '"+role.getName()+"' 成功。");
+		addMessage(redirectAttributes, "角色 '"+role.getName()+"' 保存成功。");
 		return "redirect:"+Global.getAdminPath()+"/sys/role/?repage";
 	}
 	

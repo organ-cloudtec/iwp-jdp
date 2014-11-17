@@ -33,26 +33,20 @@
 	        <!-- menu start -->
 	        <div class="navbar-collapse collapse" id="top">
 	          <ul class="nav navbar-nav navbar-right">
+	          <!--
 	          	 <li class="menu"><a class="icon-home" href="#" onblur="切换到首页"></a></li>
-	          	 <!-- 消息通知 -->
-	          	 <li class="dropdown">
-	          	 	<a class="dropdown-toggle icon-bell" data-toggle="dropdown" href="#" title="通知"></a>
-	          	 	<ul class="dropdown-menu">
-	          	 	<!-- target="mainFrame" -->
-				      <li><a href="${ctx}/sys/user/info" target ="mainFrame" ><i class="icon-user"></i>&nbsp; 个人信息</a></li>
-				      <li><a href="${ctx}/sys/user/modifyPwd" target="mainFrame" ><i class="icon-lock"></i>&nbsp;  修改密码</a></li>
-				      <li><a href="${ctx}/logout" title="退出登录"><i class="icon-off"></i>&nbsp;  退出</a></li>
-				    </ul>	
-	          	 </li>
-	          	 <!-- 用户信息 -->
-		      	 <li class="dropdown light-blue">
-				    <a class="dropdown-toggle icon-user" data-toggle="dropdown" href="#" title="个人信息">
-				    	您好, <shiro:principal property="name"/></a>
-				    <ul class="dropdown-menu">
-				      <li><a href="${ctx}/sys/user/info" target="mainFrame" ><i class="icon-user"></i>&nbsp; 个人信息</a></li>
-				      <li><a href="${ctx}/sys/user/modifyPwd" target="mainFrame" ><i class="icon-lock"></i>&nbsp;  修改密码</a></li>
-				      <li><a href="${ctx}/logout" title="退出登录"><i class="icon-off"></i>&nbsp;  退出</a></li>
-				    </ul>
+	          	  消息通知 
+	          	 <li class="menu">
+	          	 	<a class=" icon-bell"  href="#" title="通知"></a>
+	          	 </li> 
+	          	 用户信息 -->
+		      	 <li class="dropdown open">
+					    <a  href="#" class="dropdown-toggle" data-toggle="dropdown"  title="个人信息"> <i class="icon-user"></i> &nbsp; 您好, <shiro:principal property="name"/></a>
+					    <ul class="dropdown-menu">
+						      <li><a href="${ctx}/sys/user/info" target="mainFrame" ><i class="icon-user"></i>&nbsp; 个人信息</a></li>
+						      <li><a href="${ctx}/sys/user/modifyPwd" target="mainFrame" ><i class="icon-lock"></i>&nbsp;  修改密码</a></li>
+						      <li><a href="${ctx}/logout" title="退出登录"><i class="icon-off"></i>&nbsp;  退出</a></li>
+					    </ul>
 		  	 	 </li>
 	   		  </ul>
 	        </div><!-- menu end -->
