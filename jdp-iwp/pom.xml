@@ -31,6 +31,7 @@
 	
 	<!-- 工具 jar 如poi start-->
 	<poi.version>3.9</poi.version>
+	<ueditor.version>1.1.1</ueditor.version>
 	<!-- edn -->
 	<jetty.version>7.6.10.v20130312</jetty.version>
 	<webserver.port>8001</webserver.port>
@@ -208,25 +209,29 @@
 		<artifactId>guava</artifactId>
 		<version>${guava.version}</version>
 	</dependency>
-	
-	
-		<!-- poi office -->
-	  	<dependency>
-		    <groupId>org.apache.poi</groupId>
-		    <artifactId>poi</artifactId>
-		    <version>${poi.version}</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.apache.poi</groupId>
-		    <artifactId>poi-ooxml</artifactId>
-		    <version>${poi.version}</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.apache.poi</groupId>
-		    <artifactId>poi-ooxml-schemas</artifactId>
-		    <version>${poi.version}</version>
-		</dependency>
-	
+	<!-- poi office -->
+  	<dependency>
+	    <groupId>org.apache.poi</groupId>
+	    <artifactId>poi</artifactId>
+	    <version>${poi.version}</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.apache.poi</groupId>
+	    <artifactId>poi-ooxml</artifactId>
+	    <version>${poi.version}</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.apache.poi</groupId>
+	    <artifactId>poi-ooxml-schemas</artifactId>
+	    <version>${poi.version}</version>
+	</dependency>
+	<dependency>
+		<groupId> com.baidu.ueditor</groupId >  
+	    <artifactId>ueditor</artifactId >  
+	    <version>1.1.1</version>
+	    <systemPath>${basedir}/web/WEB-INF/lib/ueditor-1.1.1.jar</systemPath >
+	    <scope>system</scope >
+     </dependency>
 	<!-- TEST begin -->
 	<dependency>
 		<groupId>junit</groupId>

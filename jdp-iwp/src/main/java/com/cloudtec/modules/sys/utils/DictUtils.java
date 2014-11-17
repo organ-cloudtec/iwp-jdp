@@ -49,7 +49,16 @@ public class DictUtils {
 		}
 		return defaultLabel;
 	}
-	
+	public static Dict getDict(String recid, String type){
+		if (StringUtils.isNotBlank(type) && StringUtils.isNotBlank(recid)){
+			for (Dict dict : getDictList(type)){
+				if (type.equals(dict.getType()) && recid.equals(dict.getRecid())){
+					return dict;
+				}
+			}
+		}
+		return null;
+	}
 	public static List<Dict> getDictList(String type){
 		@SuppressWarnings("unchecked")
 		Map<String, List<Dict>> dictMap = (Map<String, List<Dict>>)CacheUtils.get(CACHE_DICT_MAP);
